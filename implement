@@ -1,0 +1,2358 @@
+```markdown
+# ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+# ║  NEXUSFORGE AI — THE ULTIMATE SINGLE IMPLEMENTATION PROMPT                                                 ║
+# ║  Complete AI Automation Revenue Engine | Director of Sales & Marketing Edition | 100+ Projects Ready        ║
+# ║  Frontend + Backend + Database + 8 AI Providers + 10 Social Platforms + CRM + SEO + Email + Billing         ║
+# ║  ZERO SKIPPING | FULL DEEP IMPLEMENTATION | EVERY LINE OF CODE | EVERY CONFIGURATION | EVERY CREDENTIAL     ║
+# ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+> **INSTRUCTION TO AI:** Build this ENTIRE platform from this single document. Every section contains
+> implementation code, configuration, credentials, API endpoints, UI specifications, and database schemas.
+> Do NOT skip any section. Do NOT summarize. Implement EVERY detail. This is a production deployment guide.
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 0: DEPLOYMENT URLS, CREDENTIALS & API KEYS — THE MASTER KEY
+# ════════════════════════════════════════════════════════════════════════════
+
+## 0.1 — Platform Deployment URLs
+
+```
+PRODUCTION:
+  Main App:           https://nexusforge.ai
+  Admin Panel:        https://nexusforge.ai/admin
+  API Server:         https://api.nexusforge.ai/v1
+  Client Portals:     https://{client-slug}.nexusforge.ai
+  CDN:                https://cdn.nexusforge.ai
+  Docs:               https://docs.nexusforge.ai
+  Status:             https://status.nexusforge.ai
+
+DEVELOPMENT:
+  Local Frontend:     http://localhost:3000
+  Local API:          http://localhost:4000
+  Local Redis:        localhost:6379
+  Local PostgreSQL:   localhost:5432
+  Local Meilisearch:  http://localhost:7700
+```
+
+## 0.2 — Pre-Seeded User Credentials
+
+```
+┌──────────────────────┬────────────────────────────┬──────────────────┬───────┐
+│  ROLE                │  EMAIL                     │  PASSWORD        │  2FA  │
+├──────────────────────┼────────────────────────────┼──────────────────┼───────┤
+│  Super Admin         │  admin@nexusforge.ai       │  NF@Admin2026!   │  TOTP │
+│  Agency Manager      │  agency@nexusforge.ai      │  NF@Agency2026!  │  TOTP │
+│  Marketing Director  │  marketing@nexusforge.ai   │  NF@Market2026!  │  OFF  │
+│  Social Manager      │  social@nexusforge.ai      │  NF@Social2026!  │  OFF  │
+│  SEO Specialist      │  seo@nexusforge.ai         │  NF@Seo2026!     │  OFF  │
+│  Content Creator     │  content@nexusforge.ai     │  NF@Content2026! │  OFF  │
+│  Sales Rep           │  sales@nexusforge.ai       │  NF@Sales2026!   │  OFF  │
+│  Email Marketer      │  email@nexusforge.ai       │  NF@Email2026!   │  OFF  │
+│  Viewer/Client       │  client@nexusforge.ai      │  NF@Client2026!  │  OFF  │
+│  Demo User           │  demo@nexusforge.ai        │  demo2026        │  OFF  │
+└──────────────────────┴────────────────────────────┴──────────────────┴───────┘
+
+2FA TOTP SECRET (for Admin accounts): JBSWY3DPEHPK3PXP
+Backup Codes: 482917, 615038, 293741, 857162, 039485, 614728
+```
+
+## 0.3 — Social Media OAuth & API Credentials
+
+```
+┌─────────────────┬──────────────────────────────────┬──────────────────────────────────┐
+│  PLATFORM       │  APP ID / CLIENT ID              │  APP SECRET / CLIENT SECRET      │
+├─────────────────┼──────────────────────────────────┼──────────────────────────────────┤
+│  Meta (IG+FB)   │  1234567890123456                │  abc123def456ghi789jkl012mno345  │
+│  Pinterest      │  9876543210987654                │  pqr456stu789vwx012yza345bcd678  │
+│  LinkedIn       │  77asdf888ghj999kll              │  efg789hij012klm345nop678qrs901  │
+│  Twitter/X      │  XYZ1234567890ABC                │  tuv012wxy345zab678cde901fgh234  │
+│  TikTok         │  ttk_1234567890abcdef            │  ijk345lmn678opq901rst234uvw567  │
+│  YouTube/Google │  234567890123-xyz.apps.google... │  GOCSPX-xyz123abc456def789ghi012 │
+│  Snapchat       │  snap_a1b2c3d4e5f6g7h8           │  xyz789abc012def345ghi678jkl901  │
+│  Reddit         │  rdt_A1B2C3D4E5F6G7H8            │  mno012pqr345stu678vwx901yza234  │
+│  Telegram Bot   │  7123456789:AAF1234567890xyz     │  (Token = full auth)             │
+│  Discord Bot    │  MTIzNDU2Nzg5MDEyMzQ1Njc4...    │  bcd345efg678hij901klm234nop567  │
+└─────────────────┴──────────────────────────────────┴──────────────────────────────────┘
+
+OAuth Redirect URI:  https://api.nexusforge.ai/v1/auth/callback/{platform}
+Webhook Base URL:    https://api.nexusforge.ai/v1/webhooks/{platform}
+```
+
+## 0.4 — ALL AI Provider API Keys & Model Endpoints
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 1: NVIDIA NIM (FREE — PRIMARY DEFAULT)                              ║
+║  Get Key: https://build.nvidia.com → Sign Up → API Keys → Generate Key       ║
+║  Base URL: https://integrate.api.nvidia.com/v1                                ║
+║  Auth: Bearer nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                          ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+NVIDIA NIM FREE LLM MODELS (Chat Completions):
+  POST /chat/completions with model field:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD     │
+  ├───────────────────────────────────────────────────────┼──────────────────────┤
+  │  🔥 REASONING & AGENTIC (Primary for agents)          │                      │
+  │  Kimi K2.6 (1T multimodal MoE)                       │  moonshotai/kimi-k2.6│
+  │  Nemotron-3 Ultra 550B                                │  nvidia/nemotron-3-ultra-550b-a55b                    │
+  │  Nemotron-3 Super 120B                               │  nvidia/nemotron-3-super-120b-a12b                    │
+  │  Nemotron-3 Nano 30B (MoE)                           │  nvidia/nemotron-3-nano-30b-a3b                      │
+  │  Nemotron-3 Nano Omni 30B Reasoning                  │  nvidia/nemotron-3-nano-omni-30b-a3b-reasoning        │
+  │  DeepSeek V4 Flash (284B MoE)                        │  deepseek-ai/deepseek-v4-flash                       │
+  │  GLM-5.1 (flagship agentic)                          │  z-ai/glm-5.1                                        │
+  │  Llama-4 Maverick 17B 128E                           │  meta/llama-4-maverick-17b-128e-instruct             │
+  │  Qwen 3.5 122B MoE                                   │  qwen/qwen3.5-122b-a10b                              │
+  │  Qwen 3.5 397B MoE VLM                               │  qwen/qwen3.5-397b-a17b                              │
+  │  Mistral Large 3 675B                                │  mistralai/mistral-large-3-675b-instruct-2512        │
+  │  Mistral Medium 3.5 128B                             │  mistralai/mistral-medium-3.5-128b                    │
+  │  Mistral Small 4 119B                                │  mistralai/mistral-small-4-119b-2603                 │
+  │  Ministral 14B                                       │  mistralai/ministral-14b-instruct-2512               │
+  │  Gemma 4 31B                                         │  google/gemma-4-31b-it                               │
+  │  Gemma 3n E4B (edge)                                 │  google/gemma-3n-e4b-it                              │
+  │  Gemma 3n E2B (edge)                                 │  google/gemma-3n-e2b-it                              │
+  │  Llama 3.3 70B Instruct                              │  meta/llama-3.3-70b-instruct                         │
+  │  Llama 3.1 70B Instruct                              │  meta/llama-3.1-70b-instruct                         │
+  │  Llama 3.1 8B Instruct                               │  meta/llama-3.1-8b-instruct                          │
+  │  Llama 3.2 3B Instruct                               │  meta/llama-3.2-3b-instruct                          │
+  │  Llama 3.2 1B Instruct                               │  meta/llama-3.2-1b-instruct                          │
+  │  Phi-4 Mini Instruct                                 │  microsoft/phi-4-mini-instruct                       │
+  │  Phi-4 Mini Flash Reasoning                          │  microsoft/phi-4-mini-flash-reasoning                │
+  │  Nemotron Nano 9B v2                                 │  nvidia/nvidia-nemotron-nano-9b-v2                    │
+  │  Nemotron Super 49B v1.5                             │  nvidia/llama-3.3-nemotron-super-49b-v1.5            │
+  │  Nemotron Super 49B v1                               │  nvidia/llama-3.3-nemotron-super-49b-v1              │
+  │  Nemotron Nano 8B v1                                 │  nvidia/llama-3.1-nemotron-nano-8b-v1                │
+  │  Nemotron Mini 4B Instruct                           │  nvidia/nemotron-mini-4b-instruct                    │
+  │  Mistral Nemotron                                    │  mistralai/mistral-nemotron                          │
+  │  Mixtral 8x7B Instruct                               │  mistralai/mixtral-8x7b-instruct-v0.1                │
+  │  Mixtral 8x22B Instruct                              │  mistralai/mixtral-8x22b-instruct                    │
+  │  GPT-OSS 120B (MoE reasoning)                        │  openai/gpt-oss-120b                                 │
+  │  GPT-OSS 20B (MoE reasoning)                         │  openai/gpt-oss-20b                                  │
+  │  Qwen3 Coder 480B                                    │  qwen/qwen3-coder-480b-a35b-instruct                 │
+  │  Qwen3 Next 80B Instruct                             │  qwen/qwen3-next-80b-a3b-instruct                    │
+  │  Qwen3 Next 80B Thinking                             │  qwen/qwen3-next-80b-a3b-thinking                    │
+  │  QwQ 32B                                             │  qwen/qwq-32b                                        │
+  │  Step 3.7 Flash                                      │  stepfun-ai/step-3.7-flash                           │
+  │  Step 3.5 Flash                                      │  stepfun-ai/step-3.5-flash                           │
+  │  MiniMax M2.7                                        │  minimaxai/minimax-m2.7                              │
+  │  MiniMax M2.5                                        │  minimaxai/minimax-m2.5                              │
+  │  Seed OSS 36B                                        │  bytedance/seed-oss-36b-instruct                     │
+  │  Dracarys Llama 3.1 70B                              │  abacusai/dracarys-llama-3.1-70b-instruct            │
+  │  Solar 10.7B Instruct                                │  upstage/solar-10.7b-instruct                        │
+  │  Stockmark 2 100B (Japanese)                         │  stockmark/stockmark-2-100b-instruct                 │
+  │  Sarvam M (Indian languages)                         │  sarvamai/sarvam-m                                   │
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE VISION & MULTIMODAL MODELS:
+  POST /chat/completions (with image content):
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  Kimi K2.5 (multimodal)                               │  moonshotai/kimi-k2.5        │
+  │  Llama 3.2 90B Vision                                 │  meta/llama-3.2-90b-vision-instruct│
+  │  Llama 3.2 11B Vision                                 │  meta/llama-3.2-11b-vision-instruct│
+  │  Nemotron Nano 12B v2 VL                              │  nvidia/nemotron-nano-12b-v2-vl│
+  │  Nemotron Nano VL 8B v1                               │  nvidia/llama-3.1-nemotron-nano-vl-8b-v1│
+  │  Phi-4 Multimodal Instruct                            │  microsoft/phi-4-multimodal-instruct│
+  │  Llama Guard 4 12B (safety)                           │  meta/llama-guard-4-12b      │
+  │  PaliGemma                                            │  google/paligemma            │
+  │  Gemma 3 27B IT                                       │  google/gemma-3-27b-it       │
+  │  VILA                                                 │  nvidia/vila                 │
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE IMAGE GENERATION MODELS:
+  POST /images/generations:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  FLUX.1 Schnell                                       │  black-forest-labs/flux.1-schnell│
+  │  FLUX.1 Dev                                           │  black-forest-labs/flux.1-dev│
+  │  FLUX.2 Klein 4B                                      │  black-forest-labs/flux.2-klein-4b│
+  │  FLUX.1 Kontext Dev                                   │  black-forest-labs/flux.1-kontext-dev│
+  │  Stable Diffusion 3 Medium                            │  stabilityai/stable-diffusion-3-medium│
+  │  Stable Diffusion XL                                  │  stabilityai/stable-diffusion-xl│
+  │  Stable Video Diffusion                               │  stabilityai/stable-video-diffusion│
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE EMBEDDING & RETRIEVAL MODELS:
+  POST /embeddings (for RAG/knowledge base):
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  NV-Embed v1                                          │  nvidia/nv-embed-v1          │
+  │  NV-EmbedQA E5 v5                                     │  nvidia/nv-embedqa-e5-v5     │
+  │  NV-EmbedCode 7B v1                                   │  nvidia/nv-embedcode-7b-v1   │
+  │  Llama Nemotron Embed 1B v2                           │  nvidia/llama-nemotron-embed-1b-v2│
+  │  Llama Nemotron Embed VL 1B v2                        │  nvidia/llama-nemotron-embed-vl-1b-v2│
+  │  Llama 3.2 NemoRetriever 300M Embed v2               │  nvidia/llama-3.2-nemoretriever-300m-embed-v2│
+  │  Llama 3.2 NemoRetriever 1B VLM Embed v1            │  nvidia/llama-3.2-nemoretriever-1b-vlm-embed-v1│
+  │  BGE-M3                                               │  baai/bge-m3                 │
+  │  Snowflake Arctic Embed L                             │  snowflake/arctic-embed-l    │
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE RERANKING MODELS:
+  POST /reranking:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  NV-RerankQA Mistral 4B v3                           │  nvidia/nv-rerankqa-mistral-4b-v3│
+  │  Llama 3.2 NemoRetriever 500M Rerank v2             │  nvidia/llama-3.2-nemoretriever-500m-rerank-v2│
+  │  Llama 3.2 NV-RerankQA 1B v2                        │  nvidia/llama-3.2-nv-rerankqa-1b-v2│
+  │  Llama Nemotron Rerank 1B v2                         │  nvidia/llama-nemotron-rerank-1b-v2│
+  │  Rerank QA Mistral 4B                                │  nvidia/rerank-qa-mistral-4b │
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE SPEECH & AUDIO MODELS:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  Magpie TTS Zero-Shot                                 │  nvidia/magpie-tts-zeroshot  │
+  │  Riva Translate 4B                                    │  nvidia/riva-translate-4b-instruct-v1_1│
+  │  Nemotron VoiceChat                                   │  nvidia/nemotron-voicechat   │
+  │  Studio Voice (enhancement)                           │  nvidia/studio-voice         │
+  │  Background Noise Removal                             │  nvidia/background-noise-removal│
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE SAFETY & CONTENT MODERATION MODELS:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  Nemotron-3.5 Content Safety                          │  nvidia/nemotron-3.5-content-safety│
+  │  Nemotron-3 Content Safety                            │  nvidia/nemotron-3-content-safety│
+  │  Nemotron Content Safety Reasoning 4B                │  nvidia/nemotron-content-safety-reasoning-4b│
+  │  Nemotron Safety Guard 8B v3                         │  nvidia/llama-3.1-nemotron-safety-guard-8b-v3│
+  │  Nemoguard Jailbreak Detect                          │  nvidia/nemoguard-jailbreak-detect│
+  │  GLiNER PII Detection                                │  nvidia/gliner-pii           │
+  │  AI-Generated Image Detection                        │  hive/ai-generated-image-detection│
+  │  Deepfake Image Detection                            │  hive/deepfake-image-detection│
+  │  Synthetic Video Detector                            │  nvidia/synthetic-video-detector│
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE VIDEO & VISION MODELS:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  Cosmos Predict1 5B                                   │  nvidia/cosmos-predict1-5b   │
+  │  Cosmos Predict1 7B                                   │  nvidia/cosmos-predict1-7b   │
+  │  Cosmos Transfer1 7B                                  │  nvidia/cosmos-transfer1-7b  │
+  │  Cosmos Transfer2.5 2B                               │  nvidia/cosmos-transfer2.5-2b│
+  │  Cosmos3 Nano                                        │  nvidia/cosmos3-nano         │
+  │  Cosmos3 Nano Reasoner                               │  nvidia/cosmos3-nano-reasoner│
+  │  NemoRetriever Parse                                 │  nvidia/nemoretriever-parse  │
+  │  Nemotron Parse                                      │  nvidia/nemotron-parse       │
+  │  NV-DINOv2                                           │  nvidia/nv-dinov2            │
+  │  NV-Grounding DINO                                   │  nvidia/nv-grounding-dino    │
+  │  Visual ChangeNet                                    │  nvidia/visual-changenet     │
+  │  Retail Object Detection                             │  nvidia/retail-object-detection│
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE HEALTHCARE & SPECIALIZED MODELS:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  AlphaFold 2                                         │  deepmind/alphafold2         │
+  │  AlphaFold 2 Multimer                                │  deepmind/alphafold2-multimer│
+  │  ESMFold                                             │  meta/esmfold                │
+  │  ESM2 650M                                           │  meta/esm2-650m              │
+  │  Boltz2                                              │  mit/boltz2                  │
+  │  DiffDock                                            │  mit/diffdock                │
+  │  GenMol                                              │  nvidia/genmol               │
+  │  MolMIM                                              │  nvidia/molmim               │
+  │  VISTA3D                                             │  nvidia/vista3d              │
+  │  OpenFold 2                                         │  openfold/openfold2          │
+  │  OpenFold 3                                         │  openfold/openfold3          │
+  │  ProteinMPNN                                         │  ipd/proteinmpnn             │
+  │  RFdiffusion                                         │  ipd/rfdiffusion             │
+  │  Evo2 40B                                            │  arc/evo2-40b                │
+  │  MSA Search                                          │  colabfold/msa-search        │
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM FREE ROUTE OPTIMIZATION & CLIMATE:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  cuOpt (Route Optimization)                           │  nvidia/cuopt                │
+  │  CorrDiff (Climate)                                   │  nvidia/corrdiff             │
+  │  FourCastNet (Climate)                                │  nvidia/fourcastnet          │
+  │  USDCode (3D/OpenUSD)                                 │  nvidia/usdcode              │
+  │  Trellis (3D/Microsoft)                               │  microsoft/trellis           │
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+NVIDIA NIM AUTONOMOUS DRIVING MODELS:
+  
+  ┌───────────────────────────────────────────────────────┬──────────────────────────────┐
+  │  MODEL DISPLAY NAME                                   │  API model FIELD             │
+  ├───────────────────────────────────────────────────────┼──────────────────────────────┤
+  │  BEVFormer                                            │  nvidia/bevformer            │
+  │  StreamPETR                                           │  nvidia/streampetr           │
+  │  SparseDrive                                          │  nvidia/sparsedrive          │
+  │  ISing Calibration 1 35B                              │  nvidia/ising-calibration-1-35b-a3b│
+  └───────────────────────────────────────────────────────┴──────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 2: OPENAI (ChatGPT)                                                 ║
+║  Get Key: https://platform.openai.com/api-keys                                ║
+║  Base URL: https://api.openai.com/v1                                          ║
+║  Auth: Bearer sk-proj-xxxxxxxxxxxxxxxxxxxxxxxx                                ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Models: gpt-4o, gpt-4-turbo, gpt-4o-mini, dall-e-3, whisper-1, tts-1, tts-1-hd
+  Embeddings: text-embedding-3-large, text-embedding-3-small
+  Endpoints: /chat/completions, /images/generations, /audio/transcriptions, /audio/speech, /embeddings
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 3: ANTHROPIC (Claude)                                               ║
+║  Get Key: https://console.anthropic.com/settings/keys                         ║
+║  Base URL: https://api.anthropic.com/v1                                       ║
+║  Auth: x-api-key: sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx                  ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Models: claude-3-5-sonnet-20241022, claude-3-opus-20240229, claude-3-haiku-20240307
+  Endpoint: /messages (Anthropic format, NOT OpenAI compatible)
+  Headers: x-api-key, anthropic-version: 2023-06-01, content-type: application/json
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 4: GOOGLE (Gemini)                                                  ║
+║  Get Key: https://aistudio.google.com/app/apikey                              ║
+║  Base URL: https://generativelanguage.googleapis.com/v1beta                   ║
+║  Auth: ?key=AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                          ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Models: gemini-1.5-pro, gemini-1.5-flash, gemini-2.0-flash, imagen-3.0-generate-002
+  Endpoints: /models/{model}:generateContent, /models/{model}:streamGenerateContent
+  Also OpenAI-compatible: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 5: xAI (Grok)                                                      ║
+║  Get Key: https://console.x.ai/team/api-keys                                 ║
+║  Base URL: https://api.x.ai/v1                                               ║
+║  Auth: Bearer xai-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                           ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Models: grok-2, grok-2-vision, grok-3, grok-3-mini
+  Endpoints: /chat/completions (OpenAI-compatible format)
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 6: Z.AI (GLM)                                                      ║
+║  Get Key: https://open.bigmodel.cn/usercenter/apikeys                        ║
+║  Base URL: https://open.bigmodel.cn/api/paas/v4                              ║
+║  Auth: Bearer xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx                                 ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Models: glm-4-plus, glm-4-0520, glm-4v, glm-4v-plus, cogview-3-flash
+  Endpoints: /chat/completions (OpenAI-compatible), /images/generations
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 7: STABILITY AI (Image Generation)                                  ║
+║  Get Key: https://platform.stability.ai/account/keys                         ║
+║  Base URL: https://api.stability.ai/v1                                       ║
+║  Auth: Bearer sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                            ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Models: stable-diffusion-3-medium, stable-diffusion-xl, sdxl-turbo
+  Endpoints: /generation/{model}/text-to-image, /generation/{model}/image-to-image
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  PROVIDER 8: ELEVENLABS (Voice/TTS)                                          ║
+║  Get Key: https://elevenlabs.io/app/settings/api-keys                        ║
+║  Base URL: https://api.elevenlabs.io/v1                                      ║
+║  Auth: xi-api-key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                      ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+  Endpoints: /text-to-speech/{voice_id}, /voices, /models, /history
+
+## 0.5 — AI Model Fallback Chain Configuration
+
+```
+DEFAULT FALLBACK CHAIN (per task type):
+
+  AGENTIC REASONING (agent decisions, complex logic):
+    1. nvidia/nemotron-3-ultra-550b-a55b        (FREE — NVIDIA NIM)
+    2. moonshotai/kimi-k2.6                      (FREE — NVIDIA NIM)
+    3. anthropic/claude-3-5-sonnet                (PAID — Anthropic)
+    4. openai/gpt-4o                              (PAID — OpenAI)
+
+  FAST CHAT (quick replies, captions, comments):
+    1. nvidia/nemotron-3-nano-30b-a3b             (FREE — NVIDIA NIM)
+    2. nvidia/nemotron-mini-4b-instruct           (FREE — NVIDIA NIM)
+    3. google/gemini-1.5-flash                    (PAID — Google)
+    4. openai/gpt-4o-mini                         (PAID — OpenAI)
+
+  VISION (image analysis, post description):
+    1. meta/llama-3.2-90b-vision-instruct         (FREE — NVIDIA NIM)
+    2. nvidia/nemotron-nano-12b-v2-vl             (FREE — NVIDIA NIM)
+    3. openai/gpt-4o                               (PAID — OpenAI)
+
+  IMAGE GENERATION:
+    1. black-forest-labs/flux.1-schnell            (FREE — NVIDIA NIM)
+    2. stabilityai/stable-diffusion-3-medium       (FREE — NVIDIA NIM)
+    3. openai/dall-e-3                             (PAID — OpenAI)
+
+  EMBEDDINGS (knowledge base, RAG):
+    1. nvidia/nv-embed-v1                          (FREE — NVIDIA NIM)
+    2. nvidia/llama-nemotron-embed-1b-v2           (FREE — NVIDIA NIM)
+    3. openai/text-embedding-3-small               (PAID — OpenAI)
+
+  RERANKING (search relevance):
+    1. nvidia/nv-rerankqa-mistral-4b-v3            (FREE — NVIDIA NIM)
+    2. nvidia/llama-nemotron-rerank-1b-v2          (FREE — NVIDIA NIM)
+
+  CONTENT SAFETY (moderation):
+    1. nvidia/nemotron-3.5-content-safety           (FREE — NVIDIA NIM)
+    2. nvidia/nemotron-content-safety-reasoning-4b  (FREE — NVIDIA NIM)
+
+  TTS / VOICE:
+    1. nvidia/magpie-tts-zeroshot                   (FREE — NVIDIA NIM)
+    2. elevenlabs (PAID)
+
+  CODE GENERATION:
+    1. qwen/qwen3-coder-480b-a35b-instruct          (FREE — NVIDIA NIM)
+    2. deepseek-ai/deepseek-v4-flash                (FREE — NVIDIA NIM)
+    3. openai/gpt-4o                                (PAID — OpenAI)
+
+  TRANSLATION:
+    1. nvidia/riva-translate-4b-instruct-v1_1       (FREE — NVIDIA NIM)
+    2. z-ai/glm-5.1                                 (FREE — NVIDIA NIM)
+```
+
+## 0.6 — Database & Infrastructure Credentials
+
+```
+┌─────────────────┬──────────────────────────────────────────────────────────────────────┐
+│  SERVICE        │  CONNECTION STRING / CREDENTIALS                                    │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│  PostgreSQL     │  postgresql://nf_admin:NFdb2026!@db.nexusforge.ai:5432/nexusforge   │
+│  Redis          │  redis://:NFredis2026!@cache.nexusforge.ai:6379/0                   │
+│  Meilisearch    │  https://search.nexusforge.ai | MasterKey: NSearch2026!xxxx         │
+│  ClickHouse     │  clickhouse://nf_ch:NFch2026!@analytics.nexusforge.ai:8443/nf_analytics│
+│  AWS S3 / R2    │  AKIAxxxxxxxxxxxx / xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                  │
+│  Cloudflare     │  Zone: abc123def456 | Token: v4.0-xxxxxxxxxxxxxxxxxx               │
+│  Stripe         │                            │
+│  SendGrid       │  SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                         │
+│  Twilio         │  ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx / auth_token                    │
+│  Sentry         │  https://xxxxxxxx@o123456.ingest.sentry.io/789                      │
+└─────────────────┴──────────────────────────────────────────────────────────────────────┘
+```
+
+## 0.7 — OAuth Social Login Credentials (Platform Login)
+
+```
+┌─────────────────┬──────────────────────────────────────────────┬──────────────────────────────┐
+│  PROVIDER       │  CLIENT ID                                   │  REDIRECT URI                │
+├─────────────────┼──────────────────────────────────────────────┼──────────────────────────────┤
+│  Google OAuth   │  234567890123-abcxyz.apps.googleusercontent  │  /api/auth/callback/google   │
+│  Microsoft OAuth│  a1b2c3d4-e5f6-7890-abcd-ef1234567890       │  /api/auth/callback/azuread  │
+│  GitHub OAuth   │  Ov23liABCxyz123                             │  /api/auth/callback/github   │
+└─────────────────┴──────────────────────────────────────────────┴──────────────────────────────┘
+```
+
+## 0.8 — Environment Variables (.env.local)
+
+```bash
+# ═══════════════════════════════════════════════════════════
+# NexusForge AI — Complete Environment Configuration
+# ═══════════════════════════════════════════════════════════
+
+# APP
+NEXT_PUBLIC_APP_URL=https://nexusforge.ai
+NEXT_PUBLIC_APP_NAME="NexusForge AI"
+NEXT_PUBLIC_API_URL=https://api.nexusforge.ai/v1
+NODE_ENV=production
+
+# DATABASE
+DATABASE_URL=postgresql://nf_admin:NFdb2026!@db.nexusforge.ai:5432/nexusforge_prod?sslmode=require
+REDIS_URL=redis://:NFredis2026!@cache.nexusforge.ai:6379/0
+MEILISEARCH_URL=https://search.nexusforge.ai
+MEILISEARCH_KEY=NSearch2026!xxxxxxxxxx
+CLICKHOUSE_URL=clickhouse://nf_ch:NFch2026!@analytics.nexusforge.ai:8443/nexusforge_analytics?secure
+
+# AUTH
+NEXTAUTH_SECRET=nf-secret-2026-super-secure-random-string-32chars
+NEXTAUTH_URL=https://nexusforge.ai
+
+# OAUTH - Platform Login
+GOOGLE_CLIENT_ID=234567890123-abcxyz.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=GOCSPX-google-secret-123
+AZURE_AD_CLIENT_ID=a1b2c3d4-e5f6-7890-abcd-ef1234567890
+AZURE_AD_CLIENT_SECRET=azure-secret-456
+GITHUB_CLIENT_ID=Ov23liABCxyz123
+GITHUB_CLIENT_SECRET=github-secret-789
+
+# AI PROVIDERS
+NVIDIA_NIM_API_KEY=nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NVIDIA_NIM_BASE_URL=https://integrate.api.nvidia.com/v1
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_BASE_URL=https://api.openai.com/v1
+ANTHROPIC_API_KEY=sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ANTHROPIC_BASE_URL=https://api.anthropic.com/v1
+GOOGLE_AI_API_KEY=AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GOOGLE_AI_BASE_URL=https://generativelanguage.googleapis.com/v1beta
+XAI_API_KEY=xai-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+XAI_BASE_URL=https://api.x.ai/v1
+GLM_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx
+GLM_BASE_URL=https://open.bigmodel.cn/api/paas/v4
+STABILITY_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+STABILITY_BASE_URL=https://api.stability.ai/v1
+ELEVENLABS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ELEVENLABS_BASE_URL=https://api.elevenlabs.io/v1
+
+# SOCIAL MEDIA APIS
+META_APP_ID=1234567890123456
+META_APP_SECRET=abc123def456ghi789jkl012mno345
+PINTEREST_APP_ID=9876543210987654
+PINTEREST_APP_SECRET=pqr456stu789vwx012yza345bcd678
+LINKEDIN_CLIENT_ID=77asdf888ghj999kll
+LINKEDIN_CLIENT_SECRET=efg789hij012klm345nop678qrs901
+TWITTER_CLIENT_ID=XYZ1234567890ABC
+TWITTER_CLIENT_SECRET=tuv012wxy345zab678cde901fgh234
+TIKTOK_CLIENT_ID=ttk_1234567890abcdef
+TIKTOK_CLIENT_SECRET=ijk345lmn678opq901rst234uvw567
+YOUTUBE_CLIENT_ID=234567890123-xyz.apps.googleusercontent.com
+YOUTUBE_CLIENT_SECRET=GOCSPX-xyz123abc456def789ghi012
+SNAPCHAT_CLIENT_ID=snap_a1b2c3d4e5f6g7h8
+SNAPCHAT_CLIENT_SECRET=xyz789abc012def345ghi678jkl901
+REDDIT_CLIENT_ID=rdt_A1B2C3D4E5F6G7H8
+REDDIT_CLIENT_SECRET=mno012pqr345stu678vwx901yza234
+TELEGRAM_BOT_TOKEN=7123456789:AAF1234567890xyz
+DISCORD_BOT_TOKEN=MTIzNDU2Nzg5MDEyMzQ1Njc4...
+
+# PAYMENT
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+STRIPE_STARTER_PRICE_ID=price_starter
+STRIPE_PRO_PRICE_ID=price_pro
+STRIPE_AGENCY_PRICE_ID=price_agency
+
+# STORAGE
+AWS_ACCESS_KEY_ID=AKIAxxxxxxxxxxxx
+AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AWS_S3_BUCKET=nexusforge-media-prod
+AWS_REGION=us-east-1
+
+# EMAIL
+SENDGRID_API_KEY=SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+EMAIL_FROM=noreply@nexusforge.ai
+EMAIL_FROM_NAME="NexusForge AI"
+
+# SMS
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_PHONE_NUMBER=+1234567890
+
+# MONITORING
+SENTRY_DSN=https://xxxxxxxx@o123456.ingest.sentry.io/789
+DATADOG_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DATADOG_APP_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# PROXY
+BRIGHTDATA_USERNAME=xxxxxxxx
+BRIGHTDATA_PASSWORD=xxxxxxxx
+BRIGHTDATA_ENDPOINT=brd.superproxy.io:22225
+
+# CAPTCHA
+TWOCAPTCHA_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 1: PLATFORM IDENTITY & BILLING
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+Platform Name:     NexusForge AI
+Tagline:           "One Platform. Every Channel. Zero Limits."
+Domain:            nexusforge.ai
+API Domain:        api.nexusforge.ai
+CDN Domain:        cdn.nexusforge.ai
+Docs Domain:       docs.nexusforge.ai
+Status Domain:     status.nexusforge.ai
+
+Billing Model:
+  ┌────────────┬──────────┬───────────┬────────────┬──────────────┬──────────────────┐
+  │  PLAN      │  PRICE   │ ACCOUNTS  │ AI TOKENS  │ TEAM SEATS   │ KEY FEATURES     │
+  ├────────────┼──────────┼───────────┼────────────┼──────────────┼──────────────────┤
+  │  Starter   │  $29/mo  │  3        │  50K/mo    │  1           │ Basic auto,      │
+  │            │          │           │            │              │ scheduler,       │
+  │            │          │           │            │              │ basic analytics   │
+  ├────────────┼──────────┼───────────┼────────────┼──────────────┼──────────────────┤
+  │  Pro       │  $79/mo  │  10       │  200K/mo   │  5           │ Full auto,       │
+  │            │          │           │            │              │ AI studio, CRM,  │
+  │            │          │           │            │              │ blog, SEO        │
+  ├────────────┼──────────┼───────────┼────────────┼──────────────┼──────────────────┤
+  │  Agency    │  $199/mo │  50       │  1M/mo     │  25          │ White-label,     │
+  │            │          │           │            │              │ client portal,   │
+  │            │          │           │            │              │ team mgmt, API   │
+  ├────────────┼──────────┼───────────┼────────────┼──────────────┼──────────────────┤
+  │  Enterprise│  Custom  │  Unlimited│  Unlimited │  Unlimited   │ On-prem, SSO,    │
+  │            │          │           │            │              │ SLA, custom AI   │
+  │            │          │           │            │              │ training, CSM    │
+  └────────────┴──────────┴───────────┴────────────┴──────────────┴──────────────────┘
+
+White-Label: Full agency white-labeling with custom domain + branding per client
+Client Portal: Each client gets branded login at {slug}.nexusforge.ai
+Revenue Share: Agency plan gets 30% margin on client sub-accounts
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 2: TECH STACK — NON-NEGOTIABLE
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+FRONTEND:
+  Framework:       Next.js 15 (App Router) + TypeScript (strict mode)
+  Styling:         TailwindCSS v4 + shadcn/ui (FULL 50+ component library)
+  Animation:       Framer Motion (page transitions, hover states, micro-interactions)
+  Charts:          Recharts + Nivo (complex analytics dashboards)
+  Tables:          TanStack Table v8 (sorting, filtering, pagination, row selection)
+  Forms:           React Hook Form + Zod (validation schemas for every form)
+  Notifications:   Sonner (toast system with categorization)
+  Icons:           Lucide React + React Icons
+  Calendar:        React Big Calendar + FullCalendar (scheduler views)
+  Rich Editor:     TipTap (blog editor with AI extension + slash commands)
+  DnD:             @dnd-kit (drag and drop for calendar, kanban, widgets)
+  State:           Zustand (global) + TanStack/React Query (server state)
+  Date:            date-fns
+  Canvas:          Konva.js (image editor within post composer)
+  Celebration:     canvas-confetti (milestones, successful actions)
+  Command Palette: cmdk (Ctrl+K global search + actions)
+  QR Code:         qrcode.react (2FA setup display)
+  Syntax:          Shiki (code blocks in blog)
+  Webcam:          react-webcam (selfie verification for identity checks)
+
+BACKEND:
+  Runtime:         Node.js 20+ (primary) / Python 3.12 (FastAPI for ML workers)
+  API Style:       REST (primary) + GraphQL (Apollo — complex queries)
+  Auth:            NextAuth.js v5 + Passport.js (all OAuth strategies)
+  Queue:           Bull + Redis (background jobs: scraping, posting, DM sending)
+  WebSockets:      Socket.io (real-time: activity stream, live analytics, notifications)
+  Cache:           Redis (session store + API response cache + rate limiting)
+  Jobs:            node-cron (scheduled: daily audits, cleanup, reports)
+  Email:           Nodemailer + Resend (transactional + marketing emails)
+  Storage:         AWS S3 / Cloudflare R2 (media assets, exports, backups)
+  CDN:             Cloudflare (global static delivery + DDoS protection)
+  PDF:             Puppeteer + jsPDF (report generation, invoices)
+  CSV:             PapaParse + xlsx (bulk import/export)
+  Validation:      Zod (shared schemas between frontend + backend)
+  Logging:         Pino (structured JSON) + Sentry (error tracking)
+  Monitoring:      Datadog (APM + infrastructure)
+
+DATABASE:
+  Primary:         PostgreSQL 16 (Supabase or self-hosted with pgvector)
+  Cache/Queue:     Redis 7 (session, cache, Bull queue, pub/sub)
+  Search:          Meilisearch (full-text search across all entities)
+  Analytics:       ClickHouse (high-volume event data)
+  File Meta:       PostgreSQL with UUID PKs + tsvector for search
+
+AI PROVIDERS (8 TOTAL — Primary: NVIDIA NIM FREE):
+  NVIDIA NIM:      77+ free models (see Section 0.4 for complete list)
+  OpenAI:          GPT-4o, GPT-4-turbo, GPT-4o-mini, DALL-E 3, Whisper, TTS
+  Anthropic:       Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku
+  Google:          Gemini 1.5 Pro, Gemini 2.0 Flash, Imagen 3
+  xAI:             Grok-2, Grok-2 Vision, Grok-3
+  Z.AI/GLM:        GLM-4-plus, GLM-4v, CogView-3
+  Stability AI:    SDXL, SD3, Stable Video Diffusion
+  ElevenLabs:      Voice cloning + TTS + STT
+
+SOCIAL APIS (10 PLATFORMS):
+  Meta:            Instagram Graph API + Facebook Graph API
+  Pinterest:       Pinterest API v5
+  LinkedIn:        LinkedIn Marketing API
+  Twitter/X:       X API v2
+  TikTok:          TikTok for Developers API
+  YouTube:         YouTube Data API v3
+  Snapchat:        Snapchat Marketing API
+  Reddit:          Reddit API
+  Telegram:        Telegram Bot API
+  Discord:         Discord Bot API
+
+PAYMENT:
+  Stripe:          Subscriptions, usage-based billing, invoices, webhooks
+  PayPal:          Alternative payment
+  Paddle:          International SaaS billing with tax compliance
+
+THIRD-PARTY:
+  Twilio:          SMS + WhatsApp Business API
+  2Captcha:        CAPTCHA solving for login challenges
+  Brightdata:      Proxy network for scraping
+  SendGrid:        Transactional email backup
+  Zapier/Make:     Workflow automation bridge
+  Segment:         Analytics event tracking
+  Sentry:          Error monitoring
+  Datadog:         Performance monitoring
+  Calendly:        Booking integration for CRM
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 3: DESIGN SYSTEM
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+COLOR PALETTE (Dark Mode Default — Corporate Enterprise):
+
+  SURFACE:
+    Background:     #0A0A0F    Card Surface:   #121218
+    Card Border:    #1E1E2E    Elevated:       #1A1A2E
+    Input BG:       #0F0F17
+
+  ACCENT:
+    Primary:        #6366F1    Primary Hover:  #818CF8
+    Primary Muted:  #4338CA    Success:        #10B981
+    Warning:        #F59E0B    Danger:         #EF4444
+    Info:           #22D3EE    Purple:         #A855F7
+    Orange:         #F97316
+
+  TEXT:
+    Primary:        #F8FAFC    Secondary:      #94A3B8
+    Muted:          #475569    Inverse:        #0A0A0F
+
+  GRADIENTS:
+    Primary:        linear-gradient(135deg, #6366F1, #8B5CF6)
+    Revenue:        linear-gradient(135deg, #10B981, #06B6D4)
+    Danger:         linear-gradient(135deg, #EF4444, #F97316)
+    AI:             linear-gradient(135deg, #A855F7, #EC4899)
+    Success:        linear-gradient(135deg, #10B981, #34D399)
+
+TYPOGRAPHY (Inter font):
+  Display:     font-bold text-4xl tracking-tight
+  Heading:     font-semibold text-2xl tracking-tight
+  Subheading:  font-medium text-lg
+  Body:        font-normal text-sm leading-relaxed
+  Caption:     font-normal text-xs text-muted
+  Code:        font-mono text-sm bg-elevated
+  Overline:    font-semibold text-xs uppercase tracking-widest
+
+SPACING:
+  Page: p-6 | Card: p-6 (std), p-4 (compact) | Grid: gap-6 | Stack: space-y-4
+  Radius: rounded-xl (cards), rounded-2xl (modals), rounded-lg (buttons/inputs)
+
+ANIMATION:
+  Hover: translateY(-2px) + shadow-lg (200ms ease-out)
+  Press: scale(0.97) (100ms ease-in)
+  Page: opacity 0→1 + translateY(10→0) (300ms ease-out)
+  Skeleton: shimmer gradient (1.5s loop)
+  Modal: scale(0.95→1) + opacity (200ms spring)
+  Sidebar: width transition (250ms)
+  Toast: slideIn from right (300ms spring)
+  CountUp: 0→value (1000ms ease-out)
+
+COMPONENT STANDARDS:
+  StatCard: gradient border-left (4px), count-up, sparkline, trend arrow
+  DataTable: sticky header, row hover, bulk select, pagination
+  Modal: backdrop-blur-xl, escape close, focus trap, click-outside
+  Forms: floating label, real-time Zod validation, character count, error msg
+  Buttons: loading spinner, disabled opacity, icon+text, size variants
+  Tooltips: on ALL truncated text (MANDATORY — never omit)
+  Empty States: illustrated SVG + descriptive text + CTA button (NEVER "No data")
+  Loading: skeleton shimmer matching layout (NEVER bare spinner)
+  Tabs: underline with animated indicator, keyboard navigable
+  Badges: dot + text, color-coded, animated pulse for live
+  Avatars: fallback initials, status dot, group overlap stack
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 4: COMPLETE FOLDER STRUCTURE
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+nexusforge-ai/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   ├── register/page.tsx
+│   │   ├── forgot-password/page.tsx
+│   │   ├── verify-email/page.tsx
+│   │   ├── two-factor/page.tsx
+│   │   └── sso/callback/page.tsx
+│   ├── (dashboard)/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── accounts/
+│   │   │   ├── page.tsx
+│   │   │   ├── [id]/page.tsx
+│   │   │   └── add/page.tsx
+│   │   ├── automation/
+│   │   │   ├── page.tsx
+│   │   │   ├── follow/page.tsx
+│   │   │   ├── unfollow/page.tsx
+│   │   │   ├── like/page.tsx
+│   │   │   ├── comment/page.tsx
+│   │   │   ├── dm/page.tsx
+│   │   │   ├── story/page.tsx
+│   │   │   ├── engagement/page.tsx
+│   │   │   └── agent/page.tsx
+│   │   ├── targeting/
+│   │   │   ├── page.tsx
+│   │   │   ├── hashtag/page.tsx
+│   │   │   ├── competitor/page.tsx
+│   │   │   └── lists/page.tsx
+│   │   ├── scheduler/
+│   │   │   ├── page.tsx
+│   │   │   ├── compose/page.tsx
+│   │   │   ├── bulk-import/page.tsx
+│   │   │   └── drafts/page.tsx
+│   │   ├── blog/
+│   │   │   ├── page.tsx
+│   │   │   ├── [slug]/page.tsx
+│   │   │   ├── new/page.tsx
+│   │   │   ├── categories/page.tsx
+│   │   │   └── media/page.tsx
+│   │   ├── social-hub/
+│   │   │   ├── page.tsx
+│   │   │   ├── publish/page.tsx
+│   │   │   └── streams/page.tsx
+│   │   ├── email/
+│   │   │   ├── page.tsx
+│   │   │   ├── compose/page.tsx
+│   │   │   ├── templates/page.tsx
+│   │   │   ├── sequences/page.tsx
+│   │   │   └── subscribers/page.tsx
+│   │   ├── analytics/
+│   │   │   ├── page.tsx
+│   │   │   ├── social/page.tsx
+│   │   │   ├── web/page.tsx
+│   │   │   ├── email/page.tsx
+│   │   │   └── revenue/page.tsx
+│   │   ├── seo/
+│   │   │   ├── page.tsx
+│   │   │   ├── keywords/page.tsx
+│   │   │   ├── audit/page.tsx
+│   │   │   ├── backlinks/page.tsx
+│   │   │   ├── aeo/page.tsx
+│   │   │   └── geo/page.tsx
+│   │   ├── competitors/page.tsx
+│   │   ├── campaigns/
+│   │   │   ├── page.tsx
+│   │   │   ├── [id]/page.tsx
+│   │   │   └── create/page.tsx
+│   │   ├── crm/
+│   │   │   ├── page.tsx
+│   │   │   ├── contacts/page.tsx
+│   │   │   ├── deals/page.tsx
+│   │   │   ├── tasks/page.tsx
+│   │   │   └── calendar/page.tsx
+│   │   ├── products/
+│   │   │   ├── page.tsx
+│   │   │   ├── [id]/page.tsx
+│   │   │   └── orders/page.tsx
+│   │   ├── visitors/page.tsx
+│   │   ├── reports/page.tsx
+│   │   ├── escalations/page.tsx
+│   │   ├── influencers/
+│   │   │   ├── page.tsx
+│   │   │   └── campaigns/page.tsx
+│   │   ├── agency/
+│   │   │   ├── page.tsx
+│   │   │   ├── [clientId]/page.tsx
+│   │   │   └── white-label/page.tsx
+│   │   ├── ai-studio/
+│   │   │   ├── page.tsx
+│   │   │   ├── chat/page.tsx
+│   │   │   ├── image/page.tsx
+│   │   │   ├── video/page.tsx
+│   │   │   ├── voice/page.tsx
+│   │   │   ├── code/page.tsx
+│   │   │   └── workflow/page.tsx
+│   │   ├── billing/
+│   │   │   ├── page.tsx
+│   │   │   ├── invoices/page.tsx
+│   │   │   └── upgrade/page.tsx
+│   │   ├── team/
+│   │   │   ├── page.tsx
+│   │   │   ├── roles/page.tsx
+│   │   │   └── invite/page.tsx
+│   │   ├── settings/
+│   │   │   ├── page.tsx
+│   │   │   ├── general/page.tsx
+│   │   │   ├── ai-config/page.tsx
+│   │   │   ├── social-connections/page.tsx
+│   │   │   ├── notifications/page.tsx
+│   │   │   ├── security/page.tsx
+│   │   │   ├── proxies/page.tsx
+│   │   │   ├── integrations/page.tsx
+│   │   │   └── api-keys/page.tsx
+│   │   └── admin/
+│   │       ├── page.tsx
+│   │       ├── users/page.tsx
+│   │       ├── feature-flags/page.tsx
+│   │       ├── audit-log/page.tsx
+│   │       ├── system/page.tsx
+│   │       └── revenue/page.tsx
+│   ├── api/
+│   │   ├── auth/[...nextauth]/route.ts
+│   │   ├── ai/
+│   │   │   ├── generate/route.ts
+│   │   │   ├── image/route.ts
+│   │   │   ├── voice/route.ts
+│   │   │   └── models/route.ts
+│   │   ├── social/
+│   │   │   ├── publish/route.ts
+│   │   │   ├── accounts/route.ts
+│   │   │   ├── insights/route.ts
+│   │   │   └── connect/[platform]/route.ts
+│   │   ├── automation/
+│   │   │   ├── start/route.ts
+│   │   │   ├── stop/route.ts
+│   │   │   ├── status/route.ts
+│   │   │   └── config/route.ts
+│   │   ├── crm/
+│   │   │   ├── contacts/route.ts
+│   │   │   ├── deals/route.ts
+│   │   │   └── pipeline/route.ts
+│   │   ├── blog/
+│   │   │   ├── posts/route.ts
+│   │   │   ├── seo-check/route.ts
+│   │   │   └── media/route.ts
+│   │   ├── email/
+│   │   │   ├── campaigns/route.ts
+│   │   │   ├── send/route.ts
+│   │   │   └── templates/route.ts
+│   │   ├── scraper/
+│   │   │   ├── hashtag/route.ts
+│   │   │   ├── users/route.ts
+│   │   │   └── competitor/route.ts
+│   │   ├── billing/
+│   │   │   ├── checkout/route.ts
+│   │   │   ├── webhook/route.ts
+│   │   │   └── usage/route.ts
+│   │   └── webhooks/
+│   │       ├── [platform]/route.ts
+│   │       └── zapier/route.ts
+│   ├── layout.tsx
+│   └── globals.css
+│
+├── components/
+│   ├── ui/              (50+ shadcn/ui components)
+│   ├── shared/          (25+ global reusable components)
+│   ├── layouts/         (Sidebar, TopNavbar, ActivityPanel, DashboardLayout)
+│   ├── auth/            (LoginForm, RegisterForm, TwoFactorForm, SocialLoginButtons, DemoCredentials)
+│   ├── dashboard/       (15+ dashboard widget components)
+│   ├── automation/      (10+ automation config components)
+│   ├── scheduler/       (8+ scheduler/composer components)
+│   ├── blog/            (6+ blog/editor components)
+│   ├── crm/             (5+ CRM components)
+│   ├── ai-studio/       (6+ AI workspace components)
+│   └── admin/           (5+ admin panel components)
+│
+├── lib/
+│   ├── types.ts         (500+ TypeScript interfaces)
+│   ├── utils.ts         (cn, format, helpers)
+│   ├── mockData.ts      (Realistic seed data for all modules)
+│   ├── aiSimulator.ts   (AI response simulation for demo)
+│   ├── storage.ts       (localStorage wrapper with expiry)
+│   ├── constants.ts     (App-wide constants + enums)
+│   ├── validations.ts   (ALL Zod schemas)
+│   ├── ai/
+│   │   ├── providers.ts          (AI provider config + health check)
+│   │   ├── fallbackChain.ts     (Model fallback logic per task type)
+│   │   ├── promptTemplates.ts   (System prompts per use case)
+│   │   ├── tokenCounter.ts      (Token usage tracking)
+│   │   └── nvidiaNimModels.ts   (Complete NVIDIA NIM model registry)
+│   ├── social/
+│   │   ├── instagram.ts, facebook.ts, pinterest.ts, linkedin.ts,
+│   │   ├── twitter.ts, tiktok.ts, youtube.ts, snapchat.ts,
+│   │   ├── reddit.ts, telegram.ts, discord.ts
+│   └── automation/
+│       ├── followEngine.ts, likeEngine.ts, commentEngine.ts,
+│       ├── dmEngine.ts, storyEngine.ts, engagementEngine.ts,
+│       └── agentEngine.ts
+│
+├── hooks/
+│   ├── useAuth.ts, useAutomation.ts, useAI.ts, useRealtime.ts,
+│   ├── useLocalStorage.ts, useDebounce.ts, useInfiniteScroll.ts,
+│   └── usePermission.ts
+│
+├── store/
+│   ├── authStore.ts, appStore.ts, automationStore.ts,
+│   ├── notificationStore.ts, crmStore.ts, aiStore.ts
+│
+├── prisma/
+│   ├── schema.prisma    (Full database schema — 40+ models)
+│   ├── seed.ts          (Seed script with demo data)
+│   └── migrations/
+│
+├── public/
+│   ├── demo-avatars/, platform-logos/, illustrations/, og-image.png
+│
+├── .env.example, .env.local, next.config.ts, tailwind.config.ts,
+│   tsconfig.json, package.json, README.md
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 5: PHASE 0 — LOGIN, AUTH & ROLE SYSTEM (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+## 5.1 — Login Page Implementation
+
+```
+VISUAL: Full-screen split layout
+  LEFT (50%): Animated mesh gradient (indigo→purple→cyan) with floating geometric shapes,
+    "NexusForge AI" bold text, tagline, 3 rotating testimonial cards every 8 seconds
+  RIGHT (50%): Centered glassmorphism card (backdrop-blur-xl, bg-card/80, border glow)
+
+  Trust badges at bottom: "🔒 256-bit Encryption" "🛡 SOC 2 Ready" "🌍 GDPR Compliant" "⚡ 99.9% Uptime"
+
+CARD TABS: [Login] [Register] [Forgot Password] — animated underline indicator
+
+LOGIN TAB:
+  "Welcome back 👋" heading
+  Email (autocomplete @domain, validation icon ✓/✗)
+  Password (show/hide eye, strength bar)
+  "Remember me for 30 days" checkbox
+  [Sign In] → full-width primary gradient → loading → redirect
+  ——— OR ———
+  [Continue with Google] (Google icon, mock OAuth)
+  [Continue with Microsoft] (Microsoft icon, mock OAuth)
+  [Continue with GitHub] (GitHub icon, mock OAuth)
+  "Forgot password?" → switches to forgot tab
+
+REGISTER TAB:
+  "Create your account 🚀" heading
+  First Name + Last Name (side by side)
+  Work Email | Company Name
+  Password (strength meter: Weak=red/Fair=amber/Strong=green/Very Strong=emerald)
+  Confirm Password (must match)
+  Role dropdown: [Marketing Director, Social Media Manager, Agency Owner,
+    Content Creator, SEO Specialist, Sales Representative, Email Marketer, Other]
+  "I agree to Terms of Service" checkbox
+  [Create Account] → canvas-confetti → redirect to dashboard
+
+FORGOT PASSWORD TAB:
+  "Reset your password" heading
+  Email input + [Send Reset Link] → "✓ Check your inbox" with animated checkmark
+
+DEMO CREDENTIALS (clickable chips below form):
+  [👤 Demo User: demo@nexusforge.ai] [🛡 Admin: admin@nexusforge.ai]
+  [🏢 Agency: agency@nexusforge.ai] [📊 Marketing: marketing@nexusforge.ai]
+  Click chip → auto-fills email + password + submits
+
+2FA MODAL (post-login if enabled):
+  "Verify Your Identity" heading
+  Method: [📱 Authenticator] [💬 SMS] [📧 Email]
+  6-digit OTP (6 boxes, auto-focus, auto-advance, paste support)
+  [Verify] → loading → redirect
+  [Resend Code] 30s countdown
+  [Trust this device 30 days] checkbox
+  "Use backup code" link → single input
+```
+
+## 5.2 — Role & Permission System
+
+```
+ROLES:
+  Super Admin    → EVERYTHING
+  Admin          → All features + Team + Flags + Client mgmt
+  Agency Manager → Assigned clients + Reports + Billing + White-label
+  Marketing Dir  → All marketing + Budget + Team reports + Revenue
+  Social Manager → Automation + Scheduler + Social Hub + Analytics
+  SEO Specialist → Blog + SEO + Keywords + Audit + AEO/GEO
+  Content Creator→ Blog + Media + Social composer + AI Studio
+  Sales Rep      → CRM + Contacts + Deals + Products + Orders
+  Email Marketer → Email campaigns + Flows + Segmentation + Templates
+  Viewer/Client  → Read-only + Reports + Export
+  Custom         → Granular per-section picker
+
+PERMISSION TOGGLES (24 categories per role):
+  ☑ Dashboard  ☑ Automation  ☑ Accounts  ☑ Targeting  ☑ Scheduler
+  ☑ Blog/CMS   ☑ Social Hub  ☑ Email      ☑ Analytics  ☑ SEO/AEO/GEO
+  ☑ Competitors ☑ Campaigns  ☑ CRM        ☑ Influencers ☑ Products
+  ☑ AI Studio  ☑ Team Mgmt  ☑ Billing    ☑ API Keys   ☑ Client Portal
+  ☑ White-Label ☑ AI Config  ☑ Feature Flags ☑ Audit Log
+
+IMPLEMENTATION: <PermissionGate permission="automation.follow"><FollowConfig/></PermissionGate>
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 6: PHASE 1 — GLOBAL LAYOUT & NAVIGATION (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+## 6.1 — Top Navbar (z-50, fixed)
+
+```
+LEFT:  [☰ Sidebar Toggle] [Logo] [Workspace Switcher ▼]
+CENTER: [🔍 Search Ctrl+K] → cmdk palette (fuzzy search all entities + quick actions)
+RIGHT: [🌍 TZ] [📊 Quick Stats] [🔔 Notifications] [⚡ Quick Create +]
+       [🌙/☀ Theme] [👤 Avatar → Profile/Workspaces/Prefs/Shortcuts/Help/Sign Out]
+```
+
+## 6.2 — Left Sidebar (z-40, 260px/64px, collapsible)
+
+```
+GROUPS:
+  📊 OVERVIEW: Dashboard, Live Analytics
+  📱 SOCIAL: Account Manager, Automation Engine, Targeting, Scheduler, Social Hub, Influencers
+  ✍️ CONTENT: Blog/CMS, SEO/AEO/GEO, Media Library, AI Studio
+  📧 MARKETING: Email, Campaigns, Competitor Intel
+  💼 SALES/CRM: CRM & Contacts, Products, Sales Pipeline, Orders
+  📊 INTEL: Visitors, Reports, Escalations
+  ⚙️ CONFIG: Proxy, Agency/Clients, Billing, Team, Settings, Admin
+
+FOOTER: Storage bar | AI Token bar | Plan badge + Upgrade link
+```
+
+## 6.3 — Right Activity Stream (z-30, 280px, fixed non-overlapping)
+
+```
+3-column layout: Sidebar(260) | Main(flex-1) | Activity(280)
+Header: "⚡ Live Activity" + [Clear] [Pause] [Filter ▼]
+Items: [Platform Icon] [Action] [timestamp] @account [Status dot]
+Types: 🟢 Follow/Like/Comment/Post/Published 🟡 Queued/Generating 🔴 Blocked/Error
+Auto-populates every 8-15s when automation active, max 100, pause-on-hover
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 7: PHASE 2 — DASHBOARD OVERVIEW (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+HERO ROW (4 StatCards with count-up + sparklines):
+  🟢 System Health 97% | 📊 Today: 347 follows, 892 likes, 145 comments
+  💰 Revenue $2,847 +34% | 📈 Growth +1,247 followers
+
+GRID (customizable drag-drop):
+  R1: Follower Growth LineChart (30d, multi-account, platform filters, [7d][30d][90d])
+  R2: Engagement BarChart | Next 5 Scheduled Posts (countdown + quick edit)
+  R3: Best Post Card (metrics + [Boost][Repurpose]) | Automation Status (toggles)
+  R4: Active Campaigns (budget burn) | AI Usage (model pie + tokens + cost)
+  R5: CRM Mini Pipeline (kanban preview: Lead→Qualified→Proposal→Closed, $128K)
+  R6: Alert Center (⚠️warnings 🔴critical ℹ️info, clickable→fix, dismissable)
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 8: PHASE 3 — ACCOUNT MANAGEMENT (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+LIST: Grid/List toggle, search, filter, group by tags
+CARD: Avatar + @username + verified + business + followers + status + health + rate limit + tags
+DETAILS DRAWER (500px): Tabs [Profile][Automations][Analytics][Security][Proxy][Warm-up][Logs]
+ADD WIZARD (5 steps): Platform→2FA→Proxy→Warm-up→Review (with confetti on success)
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 9: PHASE 4 — AUTOMATION ENGINE (8 TYPES + AGENTIC AI)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+MASTER CONTROL: [ALL: RUNNING ●] | Actions: 1,847 | Success: 94.3% | [⛔ Emergency Stop]
+TABS: [Follow][Unfollow][Like][Comment][DM][Story][Engagement][Agent AI]
+
+FOLLOW: Targets (hashtags/locations/competitors/likers/explore/CSV) + Filters (follower/following/posts/engagement ranges + exclusions) + Timing (per hour/day/delay/schedule) + Live Stats sidebar
+UNFOLLOW: Criteria (non-followers after X days, inactive, mass cleanup) + Safety locks (whitelist/verified/high-follower) + Preview list
+LIKE: Sources + Filters (post age/likes/type) + Limits + Queue grid + History
+COMMENT: Spintax library + AI generation (NVIDIA NIM Nemotron default) + Smart filters + Limits
+DM: 5 triggers (new follower/mention/comment/story/manual) + Template builder with variables + Drip sequences + AI personalization + Safety + Analytics
+STORY: View settings + Auto-react rules + Story reply triggers
+ENGAGEMENT: If/then comment rules + Auto-like comments + FAQ DM bot + Human handoff
+AGENT AI: 4 agents (Comment Reply, DM Conversation, Group Share, Content Repurpose) + Visual Workflow Builder + Monitoring Dashboard + Human Approval Queue + Full Audit Trail + Safety Panel
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 10: PHASE 5 — TARGETING & SCRAPING (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+SCRAPER: 6 tabs (Hashtag/Location/Competitor/Likers/Commenters/Explore)
+  Progress bar + Results TanStack Table (avatar/username/followers/engagement/actions)
+  Bulk actions (Add to list/Export CSV/Follow/DM campaign/Blacklist)
+  Saved Lists manager + Whitelist/Blacklist tabs
+
+HASHTAG INTELLIGENCE:
+  Analyzer (posts/engagement/competition/trend/timing/content type)
+  Set Builder (10 high + 10 medium + 10 low, AI suggest 30 best)
+  Rotation Scheduler (Set A/B/C by day, anti-shadowban)
+
+COMPETITOR INTELLIGENCE:
+  Add up to 20 competitors, auto-track daily
+  Comparison charts + Top posts analysis + Hashtag overlap map
+  Posting heatmap + Content gap report + AI content ideas
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 11: PHASE 6 — CONTENT SCHEDULER & PUBLISHER (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+CALENDAR: Month/Week/Day/List/Kanban views, drag-drop reschedule, platform color coding
+  Bulk selection, content gap warnings, export PDF/ICS, Google Calendar sync
+
+POST COMPOSER (5 steps):
+  1. Platform & Account (multi-select chips)
+  2. Media Upload (drag-drop + AI generate + inline Konva.js editor with crop/filter/adjust/text/stickers)
+  3. Caption (AI generate, emoji picker, hashtag autocomplete, per-platform customization, first comment, location, alt text AI)
+  4. Scheduling (Now/Schedule/Queue + smart time suggestions)
+  5. Preview & Confirm (platform mockups side by side)
+
+BULK CSV IMPORT: Template download → upload → column mapping → validation → preview → import
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 12: PHASE 7 — BLOG/CMS + AI CONTENT (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+DASHBOARD: Posts table (TanStack) with SEO score badges, views, status, bulk actions
+EDITOR: TipTap WYSIWYG with slash commands + AI extensions (Write/Expand/Summarize/Rewrite/Translate/Grammar)
+AI STUDIO: Multi-model selector (all 8 providers), content type, topic, outline, tone, length
+TITLE CHECKER: Score (0-100), word/char count, power words, emotional trigger, platform optimization
+SEO OPTIMIZER: Real-time score + checklist (keyword in title/meta/slug/H1/H2/density/links/alt/readability)
+  Related keywords suggestions + [Auto-Optimize] button
+MEDIA LIBRARY: Grid/list view, folders, tags, search, AI generate, edit, download
+EDITORIAL CALENDAR: Weekly/monthly plan, workflow states (Idea→Outline→Draft→Review→SEO→Scheduled→Published)
+AI DAILY POSTS: "AI Generate 2 Posts Today" button → checks count → wizard → publishes
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 13: PHASE 8 — SOCIAL HUB + MULTI-PLATFORM (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+CONNECTIONS: All 10 platforms (IG/FB/Pinterest/LinkedIn/X/TikTok/YouTube/Snapchat/Reddit/Telegram/Discord)
+  OAuth flow per platform, token refresh, permission management, test connection
+
+UNIFIED PUBLISHER: Multi-platform post with platform-specific optimization (resize/convert/adjust caption)
+  Per-platform caption tabs + AI adapt + smart scheduling
+
+SOCIAL CALENDAR: Cross-platform visual planner, color-coded, drag-drop, content gap alerts
+  Recurring posts, campaign tagging, team assignments, approval status
+
+SOCIAL ANALYTICS: Combined metrics + per-platform breakdown + growth trends
+  Best content + engagement metrics + demographics + peak times + [Compare][Goals][Reports]
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 14: PHASE 9 — EMAIL MARKETING (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+CAMPAIGN BUILDER: Drag-drop email editor (header/hero/text/button/image/divider/social columns)
+  Template library (Newsletter/Promotion/Welcome/Product Launch/Blank)
+  Responsive preview (desktop/mobile)
+  Variable inserter ({first_name}/{company}/{link})
+  [Send Test] [Schedule] [Save Draft]
+
+SEQUENCES: Drip automation builder (trigger + delay + action nodes)
+  Welcome series, abandoned cart, re-engagement, post-purchase
+  Branching logic, A/B testing per step
+
+SUBSCRIBERS: List management, import CSV, segment builder
+  Custom fields, tags, engagement scoring
+  Unsubscribe management, bounce handling
+
+ANALYTICS: Open rate, click rate, bounce rate, unsubscribe rate per campaign
+  Click heatmap, device breakdown, geo breakdown
+  Revenue attribution, A/B test results
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 15: PHASE 10 — CRM & SALES PIPELINE (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+CONTACTS: Full database (name/email/phone/company/social handles/tags/lead score/source)
+  Import CSV, duplicate merge, activity timeline per contact
+  Custom fields, segmentation, advanced search + filter
+
+DEALS PIPELINE: Kanban board (Lead→Qualified→Proposal→Negotiation→Closed Won→Closed Lost)
+  Drag-drop cards, deal value, probability, expected close date
+  Win rate analytics, average deal cycle, pipeline velocity
+
+TASKS: Per-deal and standalone tasks, assignments, due dates, priority
+  Calendar view, overdue alerts
+
+PRODUCTS: Catalog with pricing, descriptions, images, categories
+  Link products to deals, track revenue per product
+
+ORDERS & INVOICES: Generate invoices from closed deals
+  Stripe integration for payment, PDF export, send to client
+  Revenue tracking, MRR/ARR dashboard
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 16: PHASE 11 — AI STUDIO (UNIFIED AI WORKSPACE)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+CHAT: Multi-model conversation (switch models mid-conversation)
+  All 8 providers available, system prompt editor, conversation history
+  Export chat, share link, save as template
+
+IMAGE: Text-to-image (FLUX.1 Schnell/Dev, SDXL, SD3, DALL-E 3, CogView)
+  Style presets, size options, batch generation, variations, upscale
+
+VIDEO: Text-to-video (Cosmos Predict, Stable Video Diffusion)
+  Prompt input, duration, aspect ratio, preview
+
+VOICE: TTS (Magpie TTS, ElevenLabs, Nemotron VoiceChat)
+  Voice selection, speed/pitch, clone voice from sample, STT
+
+CODE: AI code generation (Qwen3 Coder, DeepSeek V4, GPT-4o)
+  Language selector, context input, syntax highlighting, copy
+
+WORKFLOW: Visual node editor (Trigger→Observe→Decide→Act→Log)
+  Pre-built templates, custom flows, test run, analytics
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 17: PHASE 12 — SEO/AEO/GEO TOOLS (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+KEYWORD RESEARCH: Search volume, difficulty, CPC, trend, related keywords
+  Keyword tracker (daily rank positions), SERP preview
+
+SITE AUDIT: Crawl site → find issues (broken links, missing meta, slow pages, duplicate content)
+  Priority-scored fix list, auto-fix suggestions
+
+BACKLINKS: Monitor backlinks, new/lost tracking, domain authority, anchor text analysis
+
+AEO (AI Engine Optimization): Optimize content for AI search (ChatGPT, Gemini, Claude citations)
+  Structured data recommendations, FAQ schema, entity markup
+
+GEO (Generative Engine Optimization): Optimize for AI-generated answers
+  Content formatting for LLM comprehension, citation-worthy content scoring
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 18: PHASE 13 — ANALYTICS & REPORTING (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+SOCIAL ANALYTICS: Per-platform metrics (followers, engagement, reach, impressions, saves)
+  Growth trends, best posting times, content performance ranking
+  Audience demographics, competitor comparison
+
+WEB ANALYTICS: Visitor tracking, page views, bounce rate, session duration
+  Traffic sources, geo distribution, device breakdown
+  Goal tracking, conversion funnels
+
+EMAIL ANALYTICS: Open/click/bounce/unsubscribe rates per campaign
+  Click heatmap, revenue attribution, A/B test results
+
+REVENUE ANALYTICS: MRR, ARR, churn rate, LTV, CAC
+  Revenue by plan, by client, by source
+  Forecasting, cohort analysis
+
+REPORT BUILDER: Custom reports with drag-drop widgets
+  Schedule automated reports (daily/weekly/monthly), PDF/CSV export
+  Share reports with team/clients via link
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 19: PHASE 14 — AGENCY & WHITE-LABEL (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+CLIENT MANAGEMENT: Add/edit clients, assign workspaces, sub-accounts, team members
+  Per-client billing, usage quotas, custom permissions
+
+WHITE-LABEL: Custom logo, colors, domain, email templates per client
+  Branded login page, branded reports, branded email sending domain
+
+CLIENT PORTAL: Each client gets {slug}.nexusforge.ai with their branding
+  Read-only dashboard, reports, scheduled posts preview, billing
+  Custom permission set per client
+
+REVENUE SHARE: Agency earns 30% on client sub-accounts
+  Revenue dashboard, payout tracking, Stripe Connect integration
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 20: PHASE 15 — ADMIN PANEL (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+PLATFORM STATS: Total users, active subscriptions, MRR, system health
+  Real-time metrics, growth charts, churn indicators
+
+USER MANAGEMENT: All users table, search, filter, edit roles, suspend/delete
+  Impersonate user (for support), reset password, manage 2FA
+
+FEATURE FLAGS: Toggle features per plan, per user, per client
+  A/B test flags, gradual rollout percentages, kill switches
+
+AUDIT LOG: Every action logged (who, what, when, where, result)
+  Filter by user, action type, date range, entity
+  Export log, retention settings
+
+SYSTEM HEALTH: Server CPU/RAM/disk, database connections, Redis memory
+  API response times, error rates, queue depths
+  Alert configuration (Slack/email/Sentry)
+
+REVENUE DASHBOARD: MRR/ARR trend, plan distribution, churn analysis
+  Top accounts, usage-based billing metrics, invoice history
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 21: PHASE 16 — BILLING & SUBSCRIPTIONS (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+PLAN SELECTOR: 4 plans with feature comparison table + [Upgrade] [Downgrade] buttons
+  Stripe Checkout integration, coupon code support, free trial 14 days
+
+USAGE METERING: AI tokens used/limit, storage used/limit, accounts connected/limit
+  Overage billing for excess usage, real-time progress bars
+
+INVOICES: Auto-generated monthly invoices, PDF download, email delivery
+  Payment history, failed payment retry, dunning emails
+
+WEBHOOK HANDLER: Stripe webhooks for:
+  checkout.session.completed, customer.subscription.updated,
+  customer.subscription.deleted, invoice.payment_succeeded,
+  invoice.payment_failed, customer.subscription.trial_will_end
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 22: PHASE 17 — SETTINGS & CONFIGURATION (IMPLEMENTATION)
+# ════════════════════════════════════════════════════════════════════════════
+
+```
+GENERAL: Platform name, logo, favicon, timezone, language, date format
+AI CONFIG: All 8 AI provider API keys, test connection, fallback chain config, default models
+SOCIAL CONNECTIONS: OAuth connect/disconnect for all 10 platforms, token refresh
+NOTIFICATIONS: Email/push/in-app preferences per notification type
+SECURITY: 2FA setup, active sessions, IP whitelist, password change, backup codes
+PROXIES: Add/edit/test proxies, assign to accounts, rotation settings
+INTEGRATIONS: Zapier, Slack, Google Analytics, Calendly, Segment, webhooks
+API KEYS: Generate/revoke API keys, rate limit config, usage stats
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 23: DATABASE SCHEMA — PRISMA (40+ MODELS)
+# ════════════════════════════════════════════════════════════════════════════
+
+```prisma
+// Core Auth & Users
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String?
+  firstName     String?
+  lastName      String?
+  avatar        String?
+  role          UserRole  @default(VIEWER)
+  companyId     String?
+  company       Company?  @relation(fields: [companyId], references: [id])
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+  backupCodes      String[]
+  lastLoginAt      DateTime?
+  lastLoginIp      String?
+  status         UserStatus @default(ACTIVE)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  sessions       Session[]
+  auditLogs      AuditLog[]
+  socialAccounts SocialAccount[]
+  contacts       Contact[]
+  deals          Deal[]
+  tasks          Task[]
+  posts          Post[]
+  blogPosts      BlogPost[]
+  emailCampaigns EmailCampaign[]
+
+  @@map("users")
+}
+
+model Company {
+  id          String  @id @default(uuid())
+  name        String
+  slug        String  @unique
+  logo        String?
+  domain      String?
+  plan        Plan    @default(STARTER)
+  stripeCustomerId String?
+  stripeSubscriptionId String?
+  aiTokensUsed   Int     @default(0)
+  aiTokensLimit  Int     @default(50000)
+  storageUsed    Float   @default(0)
+  storageLimit   Float   @default(10) // GB
+  accountsLimit  Int     @default(3)
+  teamSeatsLimit Int     @default(1)
+  whiteLabelEnabled Boolean @default(false)
+  customDomain  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  users        User[]
+  clients      Client[]
+  socialAccounts SocialAccount[]
+  invoices     Invoice[]
+
+  @@map("companies")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  AGENCY_MANAGER
+  MARKETING_DIRECTOR
+  SOCIAL_MANAGER
+  SEO_SPECIALIST
+  CONTENT_CREATOR
+  SALES_REP
+  EMAIL_MARKETER
+  VIEWER
+  CUSTOM
+}
+
+enum UserStatus { ACTIVE SUSPENDED DELETED }
+enum Plan { STARTER PRO AGENCY ENTERPRISE }
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  device       String?
+  browser      String?
+  ip           String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  @@map("sessions")
+}
+
+// Social Accounts
+model SocialAccount {
+  id              String       @id @default(uuid())
+  userId          String
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyId       String
+  company         Company      @relation(fields: [companyId], references: [id])
+  platform        Platform     @default(INSTAGRAM)
+  platformUserId  String
+  username        String
+  displayName     String?
+  avatar          String?
+  bio             String?
+  followers       Int          @default(0)
+  following       Int          @default(0)
+  posts           Int          @default(0)
+  accountType     String?      // personal/business/creator
+  isVerified      Boolean      @default(false)
+  isPrivate       Boolean      @default(false)
+  accessToken     String       // encrypted
+  refreshToken    String?      // encrypted
+  tokenExpiresAt  DateTime?
+  proxyId         String?
+  proxy           Proxy?       @relation(fields: [proxyId], references: [id])
+  warmupEnabled   Boolean      @default(false)
+  warmupDay       Int          @default(0)
+  warmupDuration  Int          @default(30)
+  healthScore     Int          @default(100)
+  rateLimitUsed   Int          @default(0)
+  rateLimitMax    Int          @default(1000)
+  lastActionAt    DateTime?
+  status          AccountStatus @default(ACTIVE)
+  tags            String[]
+  automations     Automation[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@unique([platform, platformUserId])
+  @@map("social_accounts")
+}
+
+enum Platform {
+  INSTAGRAM FACEBOOK TIKTOK LINKEDIN PINTEREST
+  TWITTER YOUTUBE SNAPCHAT REDDIT TELEGRAM DISCORD
+}
+enum AccountStatus { ACTIVE PAUSED BLOCKED ERROR WARMUP }
+
+// Automation
+model Automation {
+  id              String        @id @default(uuid())
+  socialAccountId String
+  socialAccount   SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  type            AutomationType
+  name            String
+  status          AutomationStatus @default(PAUSED)
+  config          Json           // full configuration object
+  presetName      String?
+  actionsToday    Int            @default(0)
+  actionsTotal    Int            @default(0)
+  successRate     Float          @default(0)
+  lastRunAt       DateTime?
+  nextRunAt       DateTime?
+  scheduleStart   String?        // "09:00"
+  scheduleEnd     String?        // "22:00"
+  scheduleDays    Int[]          // [1,2,3,4,5] = Mon-Fri
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("automations")
+}
+
+enum AutomationType {
+  FOLLOW UNFOLLOW LIKE COMMENT DM STORY VIEW ENGAGEMENT AGENT
+}
+enum AutomationStatus { RUNNING PAUSED STOPPED ERROR }
+
+// Posts & Scheduling
+model Post {
+  id              String     @id @default(uuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id])
+  companyId       String
+  socialAccountId String?
+  socialAccount   SocialAccount? @relation(fields: [socialAccountId], references: [id])
+  platform        Platform?
+  type            PostType   @default(FEED)
+  mediaUrls       String[]
+  caption         String
+  firstComment    String?
+  location        String?
+  taggedUsers     String[]
+  hashtags        String[]
+  altText         String?
+  linkUrl         String?
+  status          PostStatus @default(DRAFT)
+  scheduledAt     DateTime?
+  publishedAt     DateTime?
+  likes           Int        @default(0)
+  comments        Int        @default(0)
+  shares          Int        @default(0)
+  saves           Int        @default(0)
+  reach           Int        @default(0)
+  impressions     Int        @default(0)
+  campaignId      String?
+  campaign        Campaign?  @relation(fields: [campaignId], references: [id])
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@map("posts")
+}
+
+enum PostType { FEED STORY REEL CAROUSEL PIN TWEET ARTICLE VIDEO }
+enum PostStatus { DRAFT SCHEDULED PUBLISHING PUBLISHED FAILED DELETED }
+
+// Blog
+model BlogPost {
+  id              String       @id @default(uuid())
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  companyId       String
+  title           String
+  slug            String       @unique
+  content         String       // HTML from TipTap
+  excerpt         String?
+  featuredImage   String?
+  category        String?
+  tags            String[]
+  focusKeyword    String?
+  metaTitle       String?
+  metaDescription String?
+  seoScore        Int          @default(0)
+  wordCount       Int          @default(0)
+  readabilityScore Int         @default(0)
+  status          BlogStatus   @default(DRAFT)
+  views           Int          @default(0)
+  avgTimeOnPage   Int          @default(0) // seconds
+  bounceRate      Float        @default(0)
+  publishedAt     DateTime?
+  scheduledAt     DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@map("blog_posts")
+}
+
+enum BlogStatus { IDEA OUTLINE DRAFT REVIEW SEO_CHECK SCHEDULED PUBLISHED ARCHIVED }
+
+// CRM
+model Contact {
+  id            String       @id @default(uuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  companyId     String
+  firstName     String
+  lastName      String?
+  email         String?
+  phone         String?
+  company       String?
+  jobTitle      String?
+  website       String?
+  linkedin      String?
+  twitter       String?
+  instagram     String?
+  source        String?      // organic/referral/ad/social/automation
+  leadScore     Int          @default(0)
+  leadStatus    LeadStatus   @default(NEW)
+  tags          String[]
+  customFields  Json?
+  lastContactedAt DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  deals         Deal[]
+  tasks         Task[]
+
+  @@map("contacts")
+}
+
+enum LeadStatus { NEW QUALIFIED PROPOSAL NEGOTIATION CLOSED_WON CLOSED_LOST }
+
+model Deal {
+  id            String     @id @default(uuid())
+  contactId     String
+  contact       Contact    @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User       @relation(fields: [userId], references: [id])
+  companyId     String
+  title         String
+  value         Float      @default(0)
+  probability   Int        @default(50)
+  stage         DealStage  @default(LEAD)
+  expectedCloseDate DateTime?
+  actualCloseDate   DateTime?
+  notes         String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@map("deals")
+}
+
+enum DealStage { LEAD QUALIFIED PROPOSAL NEGOTIATION CLOSED_WON CLOSED_LOST }
+
+model Task {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  contactId   String?
+  contact     Contact? @relation(fields: [contactId], references: [id])
+  dealId      String?
+  title       String
+  description String?
+  priority    Priority @default(MEDIUM)
+  status      TaskStatus @default(TODO)
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("tasks")
+}
+
+enum Priority { LOW MEDIUM HIGH URGENT }
+enum TaskStatus { TODO IN_PROGRESS DONE CANCELLED }
+
+// Campaigns
+model Campaign {
+  id          String       @id @default(uuid())
+  companyId   String
+  name        String
+  type        CampaignType
+  budget      Float        @default(0)
+  spent       Float        @default(0)
+  status      CampaignStatus @default(DRAFT)
+  startDate   DateTime?
+  endDate     DateTime?
+  platforms   Platform[]
+  targetAudience String?
+  goals       String[]
+  posts       Post[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("campaigns")
+}
+
+enum CampaignType { SOCIAL EMAIL CONTENT SEO INFLUENCER PAID }
+enum CampaignStatus { DRAFT ACTIVE PAUSED COMPLETED CANCELLED }
+
+// Email
+model EmailCampaign {
+  id              String          @id @default(uuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  companyId       String
+  name            String
+  subject         String
+  previewText     String?
+  fromName        String
+  fromEmail       String
+  htmlContent     String
+  plainTextContent String?
+  templateId      String?
+  status          EmailStatus     @default(DRAFT)
+  recipientCount  Int             @default(0)
+  openCount       Int             @default(0)
+  clickCount      Int             @default(0)
+  bounceCount     Int             @default(0)
+  unsubscribeCount Int            @default(0)
+  scheduledAt     DateTime?
+  sentAt          DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("email_campaigns")
+}
+
+enum EmailStatus { DRAFT SCHEDULED SENDING SENT FAILED }
+
+// Proxy
+model Proxy {
+  id            String    @id @default(uuid())
+  companyId     String
+  host          String
+  port          Int
+  username      String?
+  password      String?   // encrypted
+  type          ProxyType @default(RESIDENTIAL)
+  location      String?
+  latency       Int?
+  status        ProxyStatus @default(ACTIVE)
+  socialAccounts SocialAccount[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("proxies")
+}
+
+enum ProxyType { RESIDENTIAL DATACENTER MOBILE }
+enum ProxyStatus { ACTIVE TESTING FAILED DISABLED }
+
+// Client (Agency)
+model Client {
+  id            String   @id @default(uuid())
+  companyId     String
+  company       Company  @relation(fields: [companyId], references: [id])
+  name          String
+  slug          String   @unique
+  logo          String?
+  domain        String?
+  primaryContact String?
+  plan          Plan     @default(STARTER)
+  status        ClientStatus @default(ACTIVE)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("clients")
+}
+
+enum ClientStatus { ACTIVE SUSPENDED CHURNED TRIAL }
+
+// Invoice
+model Invoice {
+  id            String        @id @default(uuid())
+  companyId     String
+  company       Company       @relation(fields: [companyId], references: [id])
+  amount        Float
+  currency      String        @default("USD")
+  status        InvoiceStatus @default(PENDING)
+  stripeInvoiceId String?
+  dueDate       DateTime
+  paidAt        DateTime?
+  pdfUrl        String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@map("invoices")
+}
+
+enum InvoiceStatus { PENDING PAID OVERDUE CANCELLED REFUNDED }
+
+// Audit Log
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  action      String
+  entity      String
+  entityId    String?
+  details     Json?
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
+// Feature Flags
+model FeatureFlag {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  name        String
+  description String?
+  enabled     Boolean  @default(false)
+  plans       Plan[]
+  rolloutPct  Int      @default(0) // 0-100
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("feature_flags")
+}
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 24: NVIDIA NIM AI PROVIDER IMPLEMENTATION (TypeScript)
+# ════════════════════════════════════════════════════════════════════════════
+
+```typescript
+// lib/ai/nvidiaNimProvider.ts
+
+interface NVIDIAModelConfig {
+  id: string;
+  name: string;
+  category: 'reasoning' | 'fast' | 'vision' | 'image' | 'embedding' | 'rerank' | 'safety' | 'tts' | 'code' | 'translation';
+  contextWindow: number;
+  isFree: boolean;
+}
+
+export const NVIDIA_NIM_MODELS: NVIDIAModelConfig[] = [
+  // REASONING & AGENTIC
+  { id: 'moonshotai/kimi-k2.6', name: 'Kimi K2.6', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'nvidia/nemotron-3-ultra-550b-a55b', name: 'Nemotron Ultra 550B', category: 'reasoning', contextWindow: 1048576, isFree: true },
+  { id: 'nvidia/nemotron-3-super-120b-a12b', name: 'Nemotron Super 120B', category: 'reasoning', contextWindow: 1048576, isFree: true },
+  { id: 'nvidia/nemotron-3-nano-30b-a3b', name: 'Nemotron Nano 30B', category: 'fast', contextWindow: 1048576, isFree: true },
+  { id: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning', name: 'Nemotron Nano Omni Reasoning', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'deepseek-ai/deepseek-v4-flash', name: 'DeepSeek V4 Flash', category: 'reasoning', contextWindow: 1048576, isFree: true },
+  { id: 'z-ai/glm-5.1', name: 'GLM-5.1', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'meta/llama-4-maverick-17b-128e-instruct', name: 'Llama 4 Maverick', category: 'reasoning', contextWindow: 1048576, isFree: true },
+  { id: 'qwen/qwen3.5-122b-a10b', name: 'Qwen 3.5 122B', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'qwen/qwen3.5-397b-a17b', name: 'Qwen 3.5 397B VLM', category: 'vision', contextWindow: 131072, isFree: true },
+  { id: 'mistralai/mistral-large-3-675b-instruct-2512', name: 'Mistral Large 3', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'google/gemma-4-31b-it', name: 'Gemma 4 31B', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'meta/llama-3.3-70b-instruct', name: 'Llama 3.3 70B', category: 'fast', contextWindow: 131072, isFree: true },
+  { id: 'meta/llama-3.1-70b-instruct', name: 'Llama 3.1 70B', category: 'fast', contextWindow: 131072, isFree: true },
+  { id: 'meta/llama-3.1-8b-instruct', name: 'Llama 3.1 8B', category: 'fast', contextWindow: 131072, isFree: true },
+  { id: 'microsoft/phi-4-mini-instruct', name: 'Phi-4 Mini', category: 'fast', contextWindow: 131072, isFree: true },
+  { id: 'nvidia/nvidia-nemotron-nano-9b-v2', name: 'Nemotron Nano 9B v2', category: 'fast', contextWindow: 131072, isFree: true },
+  { id: 'nvidia/llama-3.3-nemotron-super-49b-v1.5', name: 'Nemotron Super 49B v1.5', category: 'reasoning', contextWindow: 131072, isFree: true },
+  { id: 'nvidia/nemotron-mini-4b-instruct', name: 'Nemotron Mini 4B', category: 'fast', contextWindow: 131072, isFree: true },
+  // VISION
+  { id: 'meta/llama-3.2-90b-vision-instruct', name: 'Llama 3.2 90B Vision', category: 'vision', contextWindow: 131072, isFree: true },
+  { id: 'meta/llama-3.2-11b-vision-instruct', name: 'Llama 3.2 11B Vision', category: 'vision', contextWindow: 131072, isFree: true },
+  { id: 'nvidia/nemotron-nano-12b-v2-vl', name: 'Nemotron Nano 12B VL', category: 'vision', contextWindow: 131072, isFree: true },
+  { id: 'nvidia/llama-3.1-nemotron-nano-vl-8b-v1', name: 'Nemotron Nano VL 8B', category: 'vision', contextWindow: 131072, isFree: true },
+  { id: 'microsoft/phi-4-multimodal-instruct', name: 'Phi-4 Multimodal', category: 'vision', contextWindow: 131072, isFree: true },
+  // IMAGE
+  { id: 'black-forest-labs/flux.1-schnell', name: 'FLUX.1 Schnell', category: 'image', contextWindow: 0, isFree: true },
+  { id: 'black-forest-labs/flux.1-dev', name: 'FLUX.1 Dev', category: 'image', contextWindow: 0, isFree: true },
+  { id: 'stabilityai/stable-diffusion-3-medium', name: 'SD3 Medium', category: 'image', contextWindow: 0, isFree: true },
+  { id: 'stabilityai/stable-diffusion-xl', name: 'SDXL', category: 'image', contextWindow: 0, isFree: true },
+  // EMBEDDING
+  { id: 'nvidia/nv-embed-v1', name: 'NV-Embed v1', category: 'embedding', contextWindow: 32768, isFree: true },
+  { id: 'nvidia/llama-nemotron-embed-1b-v2', name: 'Nemotron Embed 1B v2', category: 'embedding', contextWindow: 8192, isFree: true },
+  { id: 'baai/bge-m3', name: 'BGE-M3', category: 'embedding', contextWindow: 8192, isFree: true },
+  // RERANK
+  { id: 'nvidia/nv-rerankqa-mistral-4b-v3', name: 'NV-RerankQA v3', category: 'rerank', contextWindow: 32768, isFree: true },
+  { id: 'nvidia/llama-nemotron-rerank-1b-v2', name: 'Nemotron Rerank 1B', category: 'rerank', contextWindow: 8192, isFree: true },
+  // SAFETY
+  { id: 'nvidia/nemotron-3.5-content-safety', name: 'Content Safety 3.5', category: 'safety', contextWindow: 4096, isFree: true },
+  { id: 'nvidia/gliner-pii', name: 'PII Detection', category: 'safety', contextWindow: 4096, isFree: true },
+  // TTS
+  { id: 'nvidia/magpie-tts-zeroshot', name: 'Magpie TTS', category: 'tts', contextWindow: 4096, isFree: true },
+  { id: 'nvidia/nemotron-voicechat', name: 'VoiceChat', category: 'tts', contextWindow: 4096, isFree: true },
+  // CODE
+  { id: 'qwen/qwen3-coder-480b-a35b-instruct', name: 'Qwen3 Coder 480B', category: 'code', contextWindow: 262144, isFree: true },
+  // TRANSLATION
+  { id: 'nvidia/riva-translate-4b-instruct-v1_1', name: 'Riva Translate', category: 'translation', contextWindow: 4096, isFree: true },
+];
+
+// Fallback chain per task
+export const AI_FALLBACK_CHAINS: Record<string, {provider: string; model: string}[]> = {
+  agentic: [
+    { provider: 'nvidia', model: 'nvidia/nemotron-3-ultra-550b-a55b' },
+    { provider: 'nvidia', model: 'moonshotai/kimi-k2.6' },
+    { provider: 'anthropic', model: 'claude-3-5-sonnet-20241022' },
+    { provider: 'openai', model: 'gpt-4o' },
+  ],
+  fastChat: [
+    { provider: 'nvidia', model: 'nvidia/nemotron-3-nano-30b-a3b' },
+    { provider: 'nvidia', model: 'nvidia/nemotron-mini-4b-instruct' },
+    { provider: 'google', model: 'gemini-2.0-flash' },
+    { provider: 'openai', model: 'gpt-4o-mini' },
+  ],
+  vision: [
+    { provider: 'nvidia', model: 'meta/llama-3.2-90b-vision-instruct' },
+    { provider: 'nvidia', model: 'nvidia/nemotron-nano-12b-v2-vl' },
+    { provider: 'openai', model: 'gpt-4o' },
+  ],
+  imageGen: [
+    { provider: 'nvidia', model: 'black-forest-labs/flux.1-schnell' },
+    { provider: 'nvidia', model: 'stabilityai/stable-diffusion-3-medium' },
+    { provider: 'openai', model: 'dall-e-3' },
+  ],
+  embedding: [
+    { provider: 'nvidia', model: 'nvidia/nv-embed-v1' },
+    { provider: 'nvidia', model: 'nvidia/llama-nemotron-embed-1b-v2' },
+    { provider: 'openai', model: 'text-embedding-3-small' },
+  ],
+  safety: [
+    { provider: 'nvidia', model: 'nvidia/nemotron-3.5-content-safety' },
+    { provider: 'nvidia', model: 'nvidia/nemotron-content-safety-reasoning-4b' },
+  ],
+  code: [
+    { provider: 'nvidia', model: 'qwen/qwen3-coder-480b-a35b-instruct' },
+    { provider: 'nvidia', model: 'deepseek-ai/deepseek-v4-flash' },
+    { provider: 'openai', model: 'gpt-4o' },
+  ],
+  translation: [
+    { provider: 'nvidia', model: 'nvidia/riva-translate-4b-instruct-v1_1' },
+    { provider: 'nvidia', model: 'z-ai/glm-5.1' },
+  ],
+  tts: [
+    { provider: 'nvidia', model: 'nvidia/magpie-tts-zeroshot' },
+    { provider: 'elevenlabs', model: 'eleven_multilingual_v2' },
+  ],
+};
+
+// Unified AI call function with fallback
+export async function callAI(
+  taskType: keyof typeof AI_FALLBACK_CHAINS,
+  prompt: string,
+  options?: { systemPrompt?: string; temperature?: number; maxTokens?: number }
+): Promise<{ text: string; model: string; provider: string; tokensUsed: number }> {
+  const chain = AI_FALLBACK_CHAINS[taskType];
+  let lastError: Error | null = null;
+
+  for (const { provider, model } of chain) {
+    try {
+      const result = await callProvider(provider, model, prompt, options);
+      return { ...result, provider, model };
+    } catch (error) {
+      lastError = error as Error;
+      console.warn(`AI fallback: ${provider}/${model} failed, trying next...`, error);
+      continue;
+    }
+  }
+
+  throw new Error(`All AI providers failed for task ${taskType}. Last error: ${lastError?.message}`);
+}
+
+async function callProvider(
+  provider: string, model: string, prompt: string,
+  options?: { systemPrompt?: string; temperature?: number; maxTokens?: number }
+) {
+  const messages = [];
+  if (options?.systemPrompt) messages.push({ role: 'system', content: options.systemPrompt });
+  messages.push({ role: 'user', content: prompt });
+
+  switch (provider) {
+    case 'nvidia': {
+      const resp = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.NVIDIA_NIM_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature: options?.temperature ?? 0.7,
+          max_tokens: options?.maxTokens ?? 2048,
+        }),
+      });
+      if (!resp.ok) throw new Error(`NVIDIA NIM error: ${resp.status}`);
+      const data = await resp.json();
+      return {
+        text: data.choices[0].message.content,
+        tokensUsed: data.usage?.total_tokens ?? 0,
+      };
+    }
+    case 'openai': {
+      const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ model, messages, temperature: options?.temperature ?? 0.7, max_tokens: options?.maxTokens ?? 2048 }),
+      });
+      if (!resp.ok) throw new Error(`OpenAI error: ${resp.status}`);
+      const data = await resp.json();
+      return { text: data.choices[0].message.content, tokensUsed: data.usage?.total_tokens ?? 0 };
+    }
+    case 'anthropic': {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': process.env.ANTHROPIC_API_KEY!,
+          'anthropic-version': '2023-06-01',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model, max_tokens: options?.maxTokens ?? 2048, messages,
+          system: options?.systemPrompt,
+        }),
+      });
+      if (!resp.ok) throw new Error(`Anthropic error: ${resp.status}`);
+      const data = await resp.json();
+      return { text: data.content[0].text, tokensUsed: (data.usage?.input_tokens ?? 0) + (data.usage?.output_tokens ?? 0) };
+    }
+    case 'google': {
+      const resp = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GOOGLE_AI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            systemInstruction: options?.systemPrompt ? { parts: [{ text: options.systemPrompt }] } : undefined,
+          }),
+        }
+      );
+      if (!resp.ok) throw new Error(`Google AI error: ${resp.status}`);
+      const data = await resp.json();
+      return { text: data.candidates[0].content.parts[0].text, tokensUsed: data.usageMetadata?.totalTokenCount ?? 0 };
+    }
+    case 'xai': {
+      const resp = await fetch('https://api.x.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${process.env.XAI_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model, messages, temperature: options?.temperature ?? 0.7, max_tokens: options?.maxTokens ?? 2048 }),
+      });
+      if (!resp.ok) throw new Error(`xAI error: ${resp.status}`);
+      const data = await resp.json();
+      return { text: data.choices[0].message.content, tokensUsed: data.usage?.total_tokens ?? 0 };
+    }
+    default:
+      throw new Error(`Unknown provider: ${provider}`);
+  }
+}
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 25: PACKAGE.JSON — ALL DEPENDENCIES
+# ════════════════════════════════════════════════════════════════════════════
+
+```json
+{
+  "name": "nexusforge-ai",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.5.0",
+
+    "@prisma/client": "^5.20.0",
+    "next-auth": "^5.0.0-beta",
+    "@auth/prisma-adapter": "^2.0.0",
+    "passport": "^0.7.0",
+
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.5.0",
+    "lucide-react": "^0.400.0",
+
+    "framer-motion": "^11.0.0",
+    "react-hook-form": "^7.53.0",
+    "@hookform/resolvers": "^3.9.0",
+    "zod": "^3.23.0",
+    "cmdk": "^1.0.0",
+    "sonner": "^1.5.0",
+
+    "recharts": "^2.12.0",
+    "@nivo/core": "^0.87.0",
+    "@nivo/line": "^0.87.0",
+    "@nivo/bar": "^0.87.0",
+    "@nivo/pie": "^0.87.0",
+
+    "@tanstack/react-table": "^8.20.0",
+    "@tanstack/react-query": "^5.59.0",
+
+    "zustand": "^5.0.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.1.0",
+
+    "@tiptap/react": "^2.9.0",
+    "@tiptap/starter-kit": "^2.9.0",
+    "@tiptap/extension-placeholder": "^2.9.0",
+    "@tiptap/extension-image": "^2.9.0",
+    "@tiptap/extension-link": "^2.9.0",
+    "@tiptap/extension-highlight": "^2.9.0",
+    "@tiptap/extension-task-list": "^2.9.0",
+    "@tiptap/extension-mention": "^2.9.0",
+
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.0",
+
+    "react-big-calendar": "^1.14.0",
+    "@fullcalendar/core": "^6.1.0",
+    "@fullcalendar/react": "^6.1.0",
+    "@fullcalendar/daygrid": "^6.1.0",
+    "@fullcalendar/timegrid": "^6.1.0",
+    "@fullcalendar/interaction": "^6.1.0",
+
+    "konva": "^9.3.0",
+    "react-konva": "^18.2.0",
+    "canvas-confetti": "^1.9.0",
+    "qrcode.react": "^4.0.0",
+    "react-webcam": "^7.2.0",
+
+    "bull": "^4.16.0",
+    "ioredis": "^5.4.0",
+    "socket.io": "^4.8.0",
+    "socket.io-client": "^4.8.0",
+    "node-cron": "^3.0.0",
+
+    "nodemailer": "^6.9.0",
+    "resend": "^4.0.0",
+
+    "papaparse": "^5.4.0",
+    "xlsx": "^0.18.0",
+    "puppeteer": "^23.0.0",
+    "jspdf": "^2.5.0",
+
+    "stripe": "^17.0.0",
+    "@stripe/stripe-js": "^4.0.0",
+
+    "@aws-sdk/client-s3": "^3.670.0",
+    "@aws-sdk/s3-request-presigner": "^3.670.0",
+
+    "meilisearch": "^0.44.0",
+    "@clickhouse/client": "^1.0.0",
+
+    "pino": "^9.5.0",
+    "@sentry/nextjs": "^8.35.0",
+
+    "shiki": "^1.22.0",
+    "react-emoji-picker": "^1.1.0",
+    "emoji-mart": "^5.6.0",
+
+    "immer": "^10.1.0",
+    "use-immer": "^0.10.0",
+    "react-dropzone": "^14.2.0",
+    "react-colorful": "^5.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/node": "^22.0.0",
+    "prisma": "^5.20.0",
+    "tsx": "^4.19.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.0.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}
+```
+
+---
+
+# ════════════════════════════════════════════════════════════════════════════
+# SECTION 26: DEPLOYMENT & SETUP COMMANDS
+# ════════════════════════════════════════════════════════════════════════════
+
+```bash
+# 1. Clone and setup
+git clone https://github.com/nexusforge-ai/platform.git nexusforge-ai
+cd nexusforge-ai
+cp .env.example .env.local
+# Fill in all environment variables from Section 0.8
+
+# 2. Install dependencies
+npm install
+
+# 3. Setup database
+npx prisma generate
+npx prisma db push
+npx prisma db seed
+
+# 4. Run development server
+npm run dev
+
+# 5. Build for production
+npm run build
+npm start
+
+# 6. Access the platform
+# Main: http://localhost:3000
+# Login: admin@nexusforge.ai / NF@Admin2026!
+
+# 7. Configure AI providers
+# Navigate to: Settings → AI Config
+# Add NVIDIA NIM key (free): https://build.nvidia.com → API Keys
+# Test connection for each provider
+
+# 8. Connect social accounts
+# Navigate to: Settings → Social Connections
+# Click "Connect" for each platform → OAuth flow
+
+# 9. Start automating
+# Navigate to: Automation Engine → Configure → Start
+```
+
+---
+
+**END OF IMPLEMENTATION PROMPT**
+
+This single document contains EVERY credential, EVERY API endpoint, EVERY model name, EVERY UI specification, EVERY database table, EVERY configuration, and EVERY implementation detail needed to build the complete NexusForge AI platform. Feed this to any advanced AI coding assistant and it will produce a production-ready, revenue-generating AI automation platform.
