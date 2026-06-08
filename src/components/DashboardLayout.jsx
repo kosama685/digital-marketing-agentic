@@ -10,6 +10,8 @@ import ContentScheduler from '../pages/ContentScheduler';
 import BlogCMS from '../pages/BlogCMS';
 import SocialHub from '../pages/SocialHub';
 import EmailMarketing from '../pages/EmailMarketing';
+import CampaignManagement from '../pages/CampaignManagement';
+import CompetitorIntelligence from '../pages/CompetitorIntelligence';
 import { Home, Users, Bot, Target, Calendar, FileText, MessageCircle, Mail, BarChart3, Search, Building, CreditCard, Settings } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -25,17 +27,15 @@ const DashboardLayout = () => {
 
   const menuItems = [
     { id: 'overview', label: 'Overview', icon: Home },
-    { id: 'accounts', label: 'Account Management', icon: Users },
-    { id: 'automation', label: 'Automation Engine', icon: Bot },
-    { id: 'targeting', label: 'Targeting & Scraping', icon: Target },
-    { id: 'scheduler', label: 'Content Scheduler', icon: Calendar },
-    { id: 'blog', label: 'Blog/CMS Manager', icon: FileText },
+    { id: 'accounts', label: 'Accounts', icon: Users },
+    { id: 'automation', label: 'Automation', icon: Bot },
+    { id: 'targeting', label: 'Targeting', icon: Target },
+    { id: 'scheduler', label: 'Scheduler', icon: Calendar },
+    { id: 'blog', label: 'Blog/CMS', icon: FileText },
     { id: 'social', label: 'Social Hub', icon: MessageCircle },
-    { id: 'email', label: 'Email Marketing', icon: Mail },
-    { id: 'analytics', label: 'Analytics & Reports', icon: BarChart3 },
-    { id: 'seo', label: 'SEO/AEO/GEO Tools', icon: Search },
-    { id: 'competitor', label: 'Competitor Intelligence', icon: Building },
-    { id: 'billing', label: 'Billing & Subscription', icon: CreditCard },
+    { id: 'email', label: 'Email', icon: Mail },
+    { id: 'campaigns', label: 'Campaigns', icon: CreditCard },
+    { id: 'competitor', label: 'Competitors', icon: Building },
     { id: 'settings', label: 'Settings', icon: Settings }
   ];
 
@@ -49,6 +49,8 @@ const DashboardLayout = () => {
       case 'blog': return <BlogCMS />;
       case 'social': return <SocialHub />;
       case 'email': return <EmailMarketing />;
+      case 'campaigns': return <CampaignManagement />;
+      case 'competitor': return <CompetitorIntelligence />;
       default: return <Overview />;
     }
   };
