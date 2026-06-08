@@ -5,6 +5,8 @@ import Header from './Header';
 import Overview from '../pages/Overview';
 import AccountManagement from '../pages/AccountManagement';
 import AutomationEngine from '../pages/AutomationEngine';
+import TargetingScraping from '../pages/TargetingScraping';
+import ContentScheduler from '../pages/ContentScheduler';
 import { Home, Users, Bot, Target, Calendar, FileText, MessageCircle, Mail, BarChart3, Search, Building, CreditCard, Settings } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -39,6 +41,8 @@ const DashboardLayout = () => {
       case 'overview': return <Overview />;
       case 'accounts': return <AccountManagement />;
       case 'automation': return <AutomationEngine />;
+      case 'targeting': return <TargetingScraping />;
+      case 'scheduler': return <ContentScheduler />;
       default: return <Overview />;
     }
   };
