@@ -1,0 +1,174 @@
+// AutoPilot Agency OS - Prisma Schema
+// Covers: Companies, Locations, Competitors, Keywords, Campaigns, ApprovalTasks, AuditLogs
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          String     @id @default(uuid())
+  name        String
+  industry    String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  locations   Location[]
+  competitors Competitor[]
+  campaigns   Campaign[]
+  approvalTasks ApprovalTask[]
+  auditLogs   AuditLog[]
+}
+
+model Location {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  city        String
+  country     String
+  timezone    String
+  isActive    Boolean  @default(true)
+  keywords    Keyword[]
+  contentPlans ContentPlan[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([companyId, city, country])
+}
+
+model Competitor {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  name        String
+  url         String
+  location    String
+  metaTags    Json?
+  services    String[]
+  sentiments  Json?
+  weaknesses  String[]
+  lastScraped DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Keyword {
+  id          String   @id @default(uuid())
+  locationId  String
+  location    Location @relation(fields: [locationId], references: [id])
+  term        String
+  category    String   // Commercial, Problem, Competitor, Local
+  searchVolume Int?
+  difficulty  Int?
+  intent      String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([locationId, category])
+}
+
+model Campaign {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  name        String
+  type        String   // Social, Email, DM, Outbound
+  status      String   // Draft, Pending, Approved, Running, Paused, Completed
+  platform    String?  // Buffer, HubSpot, Manychat, Apollo
+  schedule    Json?    // Timezone-aware scheduling data
+  content     Json?    // Posts, emails, flows
+  approvedAt  DateTime?
+  executedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContentPlan {
+  id          String   @id @default(uuid())
+  locationId  String
+  location    Location @relation(fields: [locationId], references: [id])
+  day         Int      // 1-30 for 30-day plan
+  postTime    String   // Local time (e.g., "09:00")
+  content     String
+  platform    String
+  status      String   // Draft, Scheduled, Published
+  approvedBy  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([locationId, day])
+}
+
+model ApprovalTask {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  taskType    String   // Strategy, Social, Leads, ERP_Sync
+  title       String
+  description String
+  payload     Json     // Data to be executed upon approval
+  status      String   // Pending, Approved, Denied, Executed
+  priority    String   @default("normal") // low, normal, high, urgent
+  dueDate     DateTime?
+  approvedAt  DateTime?
+  approvedBy  String?
+  deniedAt    DateTime?
+  deniedReason String?
+  executedAt  DateTime?
+  webhookUrl  String?  // Zapier webhook to trigger on approval
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([companyId, status])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
+  action      String
+  module      String   // RPA, AI_Router, Trend_Engine, Integration, HITL
+  details     Json
+  status      String   // Success, Failed, Warning
+  error       String?
+  duration    Int?     // milliseconds
+  createdAt   DateTime @default(now())
+
+  @@index([companyId, module, createdAt])
+}
+
+model Lead {
+  id          String   @id @default(uuid())
+  companyId   String
+  source      String   // Manychat, Apollo, Web, Scraping
+  firstName   String?
+  lastName    String?
+  email       String?
+  phone       String?
+  company     String?
+  enrichedData Json?
+  hubspotId   String?
+  status      String   // New, Enriched, Contacted, Converted
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([companyId, status])
+}
+
+model IntegrationConfig {
+  id          String   @id @default(uuid())
+  companyId   String
+  service     String   // HubSpot, Apollo, Buffer, Manychat, Zapier
+  apiKey      String
+  webhookUrl  String?
+  isActive    Boolean  @default(true)
+  lastSync    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([companyId, service])
+}

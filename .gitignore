@@ -1,4 +1,50 @@
 ```
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+.pip-tools/
+
 # Build artifacts
 dist/
+build/
+target/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.npm/
+
+# Environment variables
+.env
+.env.local
+*.env.*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Icon?
+iTunes_Control/
+Thumbs.db
 ```
